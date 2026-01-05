@@ -122,35 +122,6 @@
               </a>
             </li>
 
-            <!-- Reports -->
-            <li class="menu-header small mt-5">
-              <span class="menu-header-text" data-i18n="Laporan">Laporan</span>
-            </li>
-
-            <li class="menu-item" id="menu-reports">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon icon-base ri ri-bar-chart-2-line"></i>
-                <div data-i18n="Laporan">Laporan Keuangan</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item" id="menu-report-monthly">
-                  <a href="report-monthly.jsp" class="menu-link">
-                    <div data-i18n="Laporan Bulanan">Laporan Bulanan</div>
-                  </a>
-                </li>
-                <li class="menu-item" id="menu-report-yearly">
-                  <a href="report-yearly.jsp" class="menu-link">
-                    <div data-i18n="Laporan Tahunan">Laporan Tahunan</div>
-                  </a>
-                </li>
-                <li class="menu-item" id="menu-report-category">
-                  <a href="report-category.jsp" class="menu-link">
-                    <div data-i18n="Laporan per Kategori">Laporan per Kategori</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
-
             <!-- Settings -->
             <li class="menu-header small mt-5">
               <span class="menu-header-text" data-i18n="Pengaturan">Pengaturan</span>
