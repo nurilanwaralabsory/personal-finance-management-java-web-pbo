@@ -57,6 +57,36 @@
         <url-pattern>/dashboard</url-pattern>
     </servlet-mapping>
     
+    <!-- Category Servlet -->
+    <servlet>
+        <servlet-name>CategoryServlet</servlet-name>
+        <servlet-class>controller.CategoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CategoryServlet</servlet-name>
+        <url-pattern>/categories</url-pattern>
+    </servlet-mapping>
+    
+    <!-- Income Servlet -->
+    <servlet>
+        <servlet-name>IncomeServlet</servlet-name>
+        <servlet-class>controller.IncomeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>IncomeServlet</servlet-name>
+        <url-pattern>/incomes</url-pattern>
+    </servlet-mapping>
+    
+    <!-- Expense Servlet -->
+    <servlet>
+        <servlet-name>ExpenseServlet</servlet-name>
+        <servlet-class>controller.ExpenseServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ExpenseServlet</servlet-name>
+        <url-pattern>/expenses</url-pattern>
+    </servlet-mapping>
+    
     <!-- ==================== Welcome File ==================== -->
     <welcome-file-list>
         <welcome-file>login</welcome-file>
