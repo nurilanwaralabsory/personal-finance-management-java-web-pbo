@@ -731,8 +731,8 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <h6 class="mb-0 small">John Doe</h6>
-                            <small class="text-body-secondary">Admin</small>
+                            <h6 class="mb-0 small"><%= session.getAttribute("username") != null ? session.getAttribute("username") : "User" %></h6>
+                            <small class="text-body-secondary">Member</small>
                           </div>
                         </div>
                       </a>
@@ -778,7 +778,7 @@
                     </li>
                     <li>
                       <div class="d-grid px-4 pt-2 pb-1">
-                        <a class="btn btn-sm btn-danger d-flex" href="auth-login-cover.html" target="_blank">
+                        <a class="btn btn-sm btn-danger d-flex" href="${pageContext.request.contextPath}/logout">
                           <small class="align-middle">Logout</small>
                           <i class="icon-base ri ri-logout-box-r-line ms-2 icon-16px"></i>
                         </a>
