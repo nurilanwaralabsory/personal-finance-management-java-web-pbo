@@ -1,4 +1,3 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="model.User" %>
 <%
     String currentPage = request.getRequestURI();
@@ -81,6 +80,17 @@
       <a href="<%= request.getContextPath() %>/categories" class="menu-link">
         <i class="menu-icon icon-base ri ri-price-tag-3-line"></i>
         <div>Kategori</div>
+      </a>
+    </li>
+
+    <!-- Anggaran -->
+    <li class="menu-header small mt-4">
+      <span class="menu-header-text">Anggaran</span>
+    </li>
+    <li class="menu-item <%= currentPage.contains("budget") || currentPage.endsWith("/budgets") ? "active" : "" %>">
+      <a href="<%= request.getContextPath() %>/budgets" class="menu-link">
+        <i class="menu-icon icon-base ri ri-wallet-3-line"></i>
+        <div>Budgets</div>
       </a>
     </li>
 
