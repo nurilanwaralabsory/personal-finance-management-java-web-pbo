@@ -1,2 +1,10 @@
+controller\DashboardServlet.class
+controller\LoginServlet.class
+util\KoneksiDB.class
+controller\LogoutServlet.class
 com\mycompany\personal\finance\management\JakartaRestConfiguration.class
+dao\UserDAO.class
+controller\AuthFilter.class
 com\mycompany\personal\finance\management\resources\JakartaEE10Resource.class
+controller\RegisterServlet.class
+model\User.class
