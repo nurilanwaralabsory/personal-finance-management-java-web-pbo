@@ -86,6 +86,16 @@
         <servlet-name>ExpenseServlet</servlet-name>
         <url-pattern>/expenses</url-pattern>
     </servlet-mapping>
+
+    <!-- Budget Servlet -->
+    <servlet>
+        <servlet-name>BudgetServlet</servlet-name>
+        <servlet-class>controller.BudgetServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BudgetServlet</servlet-name>
+        <url-pattern>/budgets</url-pattern>
+    </servlet-mapping>
     
     <!-- ==================== Welcome File ==================== -->
     <welcome-file-list>
