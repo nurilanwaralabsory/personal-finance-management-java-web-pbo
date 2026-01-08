@@ -27,13 +27,96 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="py-3 mb-4">Anggaran</h4>
-              
-              <div class="card">
-                <div class="card-header">
-                  <h5 class="card-title mb-0">Kelola Anggaran</h5>
+
+              <div class="row">
+                <!-- Form Add Budget -->
+                <div class="col-md-4">
+                  <div class="card mb-4">
+                    <div class="card-header">
+                      <h5 class="card-title mb-0">Set Anggaran</h5>
+                    </div>
+                    <div class="card-body">
+                      <form action="budgets" method="POST">
+                        <input type="hidden" name="action" value="add">
+                        <div class="mb-3">
+                          <label for="kategori_id" class="form-label">Kategori (Pengeluaran)</label>
+                          <select class="form-select" id="kategori_id" name="kategori_id" required>
+                            <option value="">Pilih Kategori</option>
+                            <%@ page import="java.util.List" %>
+                            <%@ page import="com.mycompany.personal.finance.management.model.Category" %>
+                            <%@ page import="com.mycompany.personal.finance.management.model.Budget" %>
+                            <%
+                                List<Category> categories = (List<Category>) request.getAttribute("categories");
+                                if (categories != null) {
+                                    for (Category cat : categories) {
+                            %>
+                            <option value="<%= cat.getId() %>"><%= cat.getNama() %></option>
+                            <%
+                                    }
+                                }
+                            %>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <label for="bulan" class="form-label">Bulan (Pilih Tanggal 1)</label>
+                          <input type="date" class="form-control" id="bulan" name="bulan" required value="<%= java.time.LocalDate.now().withDayOfMonth(1) %>">
+                        </div>
+                        <div class="mb-3">
+                          <label for="jumlah" class="form-label">Jumlah Anggaran</label>
+                          <input type="number" class="form-control" id="jumlah" name="jumlah" required min="0" step="0.01">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                      </form>
+                    </div>
+                  </div>
                 </div>
-                <div class="card-body">
-                  <p>Halaman ini akan menampilkan manajemen anggaran bulanan.</p>
+
+                <!-- List Budgets -->
+                <div class="col-md-8">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-title mb-0">Daftar Anggaran</h5>
+                    </div>
+                    <div class="table-responsive text-nowrap">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>Bulan</th>
+                            <th>Kategori</th>
+                            <th>Jumlah Budget</th>
+                            <th>Aksi</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <%
+                              List<Budget> budgets = (List<Budget>) request.getAttribute("budgets");
+                              if (budgets != null) {
+                                  for (Budget budget : budgets) {
+                          %>
+                          <tr>
+                            <td><%= new java.text.SimpleDateFormat("MMMM yyyy").format(budget.getBulan()) %></td>
+                            <td><span class="badge bg-label-primary"><%= budget.getKategoriNama() != null ? budget.getKategoriNama() : "-" %></span></td>
+                            <td class="fw-bold"><%= String.format("%,.2f", budget.getJumlah()) %></td>
+                            <td>
+                              <form action="budgets" method="POST" style="display:inline;">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="id" value="<%= budget.getId() %>">
+                                <button type="submit" class="btn btn-sm btn-icon btn-outline-danger" onclick="return confirm('Yakin ingin menghapus?')">
+                                  <i class="bx bx-trash"></i>
+                                </button>
+                              </form>
+                            </td>
+                          </tr>
+                          <%
+                                  }
+                              } else {
+                          %>
+                          <tr><td colspan="4" class="text-center">Belum ada data anggaran.</td></tr>
+                          <% } %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

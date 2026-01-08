@@ -75,7 +75,7 @@
 
             <!-- Dashboard -->
             <li class="menu-item" id="menu-dashboard">
-              <a href="index.jsp" class="menu-link">
+              <a href="dashboard" class="menu-link">
                 <i class="menu-icon icon-base ri ri-home-smile-line"></i>
                 <div data-i18n="Dashboard">Dashboard</div>
               </a>
@@ -94,12 +94,12 @@
                   </a>
                 </li>
                 <li class="menu-item" id="menu-income">
-                  <a href="income.jsp" class="menu-link">
+                  <a href="income" class="menu-link">
                     <div data-i18n="Pemasukan">Pemasukan</div>
                   </a>
                 </li>
                 <li class="menu-item" id="menu-expense">
-                  <a href="expense.jsp" class="menu-link">
+                  <a href="expense" class="menu-link">
                     <div data-i18n="Pengeluaran">Pengeluaran</div>
                   </a>
                 </li>
@@ -108,7 +108,7 @@
 
             <!-- Categories -->
             <li class="menu-item" id="menu-categories">
-              <a href="categories.jsp" class="menu-link">
+              <a href="categories" class="menu-link">
                 <i class="menu-icon icon-base ri ri-price-tag-3-line"></i>
                 <div data-i18n="Kategori">Kategori</div>
               </a>
@@ -116,7 +116,7 @@
 
             <!-- Budgets -->
             <li class="menu-item" id="menu-budgets">
-              <a href="budgets.jsp" class="menu-link">
+              <a href="budgets" class="menu-link">
                 <i class="menu-icon icon-base ri ri-wallet-3-line"></i>
                 <div data-i18n="Anggaran">Anggaran</div>
               </a>

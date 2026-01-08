@@ -8,4 +8,48 @@
             30
         </session-timeout>
     </session-config>
+    <servlet>
+        <servlet-name>DashboardController</servlet-name>
+        <servlet-class>com.mycompany.personal.finance.management.controller.DashboardController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DashboardController</servlet-name>
+        <url-pattern>/dashboard</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CategoryController</servlet-name>
+        <servlet-class>com.mycompany.personal.finance.management.controller.CategoryController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CategoryController</servlet-name>
+        <url-pattern>/categories</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>IncomeController</servlet-name>
+        <servlet-class>com.mycompany.personal.finance.management.controller.IncomeController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>IncomeController</servlet-name>
+        <url-pattern>/income</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ExpenseController</servlet-name>
+        <servlet-class>com.mycompany.personal.finance.management.controller.ExpenseController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ExpenseController</servlet-name>
+        <url-pattern>/expense</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>BudgetController</servlet-name>
+        <servlet-class>com.mycompany.personal.finance.management.controller.BudgetController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BudgetController</servlet-name>
+        <url-pattern>/budgets</url-pattern>
+    </servlet-mapping>
 </web-app>
