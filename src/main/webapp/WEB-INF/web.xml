@@ -56,6 +56,44 @@
         <servlet-name>DashboardServlet</servlet-name>
         <url-pattern>/dashboard</url-pattern>
     </servlet-mapping>
+
+    <!-- Category Servlet -->
+    <servlet>
+        <servlet-name>CategoryServlet</servlet-name>
+        <servlet-class>controller.CategoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CategoryServlet</servlet-name>
+        <url-pattern>/categories</url-pattern>
+    </servlet-mapping>
+
+    <!-- Transaction Servlet -->
+    <servlet>
+        <servlet-name>TransactionServlet</servlet-name>
+        <servlet-class>controller.TransactionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TransactionServlet</servlet-name>
+        <url-pattern>/transactions</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TransactionServlet</servlet-name>
+        <url-pattern>/income</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TransactionServlet</servlet-name>
+        <url-pattern>/expense</url-pattern>
+    </servlet-mapping>
+
+    <!-- Budget Servlet -->
+    <servlet>
+        <servlet-name>BudgetServlet</servlet-name>
+        <servlet-class>controller.BudgetServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BudgetServlet</servlet-name>
+        <url-pattern>/budgets</url-pattern>
+    </servlet-mapping>
     
     <!-- ==================== Welcome File ==================== -->
     <welcome-file-list>
