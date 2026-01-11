@@ -172,7 +172,10 @@
                             </li>
                             <li>
                               <a class="dropdown-item text-danger" href="#" 
-                                 onclick="confirmDelete(<%= category.getId() %>, '<%= category.getType() %>', '<%= category.getName() %>')">
+                                 data-id="<%= category.getId() %>"
+                                 data-type="<%= category.getType() %>"
+                                 data-name="<%= category.getName() %>"
+                                 onclick="confirmDelete(this.dataset.id, this.dataset.type, this.dataset.name)">
                                 <i class="ri ri-delete-bin-line me-2"></i> Hapus
                               </a>
                             </li>
