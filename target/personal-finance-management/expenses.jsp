@@ -187,8 +187,8 @@
                           <% if (expense.getCategoryName() != null) { %>
                           <div class="d-flex align-items-center">
                             <div class="avatar avatar-sm me-2">
-                              <span class="avatar-initial rounded" style="background-color: <%= expense.getCategoryColor() != null ? expense.getCategoryColor() : "#ea5455" %>;">
-                                <i class="<%= expense.getCategoryIcon() != null ? expense.getCategoryIcon() : "ri-folder-line" %> text-white" style="font-size: 12px;"></i>
+                              <span class="avatar-initial rounded bg-danger">
+                                <i class="ri-folder-line text-white" style="font-size: 12px;"></i>
                               </span>
                             </div>
                             <span><%= expense.getCategoryName() %></span>

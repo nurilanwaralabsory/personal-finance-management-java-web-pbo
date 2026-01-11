@@ -11,7 +11,7 @@ public class CategoryDAO {
 
     // Menambahkan kategori baru
     public boolean insert(Category category) {
-        String sql = "INSERT INTO categories (user_id, name, type, description, icon, color) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO categories (user_id, name, type, description) VALUES (?, ?, ?, ?)";
         Connection conn = null;
         PreparedStatement stmt = null;
         
@@ -27,8 +27,6 @@ public class CategoryDAO {
             stmt.setString(2, category.getName());
             stmt.setString(3, category.getType());
             stmt.setString(4, category.getDescription());
-            stmt.setString(5, category.getIcon() != null ? category.getIcon() : "ri-folder-line");
-            stmt.setString(6, category.getColor() != null ? category.getColor() : "#7367f0");
             
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
@@ -44,7 +42,7 @@ public class CategoryDAO {
 
     // Update kategori
     public boolean update(Category category) {
-        String sql = "UPDATE categories SET name = ?, description = ?, icon = ?, color = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND user_id = ?";
+        String sql = "UPDATE categories SET name = ?, description = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND user_id = ?";
         Connection conn = null;
         PreparedStatement stmt = null;
         
@@ -58,10 +56,8 @@ public class CategoryDAO {
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, category.getName());
             stmt.setString(2, category.getDescription());
-            stmt.setString(3, category.getIcon());
-            stmt.setString(4, category.getColor());
-            stmt.setInt(5, category.getId());
-            stmt.setInt(6, category.getUserId());
+            stmt.setInt(3, category.getId());
+            stmt.setInt(4, category.getUserId());
             
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
@@ -276,8 +272,6 @@ public class CategoryDAO {
         category.setName(rs.getString("name"));
         category.setType(rs.getString("type"));
         category.setDescription(rs.getString("description"));
-        category.setIcon(rs.getString("icon"));
-        category.setColor(rs.getString("color"));
         category.setCreatedAt(rs.getTimestamp("created_at"));
         category.setUpdatedAt(rs.getTimestamp("updated_at"));
         return category;

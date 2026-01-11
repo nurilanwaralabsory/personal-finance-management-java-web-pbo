@@ -154,8 +154,6 @@ public class CategoryServlet extends HttpServlet {
         String name = request.getParameter("name");
         String type = request.getParameter("type");
         String description = request.getParameter("description");
-        String icon = request.getParameter("icon");
-        String color = request.getParameter("color");
         
         // Validasi input
         if (name == null || name.trim().isEmpty()) {
@@ -186,8 +184,6 @@ public class CategoryServlet extends HttpServlet {
         category.setName(name.trim());
         category.setType(type);
         category.setDescription(description);
-        category.setIcon(icon != null && !icon.isEmpty() ? icon : "ri-folder-line");
-        category.setColor(color != null && !color.isEmpty() ? color : "#7367f0");
         
         if (categoryDAO.insert(category)) {
             request.getSession().setAttribute("success", "Kategori berhasil ditambahkan!");
@@ -206,8 +202,6 @@ public class CategoryServlet extends HttpServlet {
         String idParam = request.getParameter("id");
         String name = request.getParameter("name");
         String description = request.getParameter("description");
-        String icon = request.getParameter("icon");
-        String color = request.getParameter("color");
         
         if (idParam == null || idParam.isEmpty()) {
             response.sendRedirect(request.getContextPath() + "/categories");
@@ -245,8 +239,6 @@ public class CategoryServlet extends HttpServlet {
             // Update kategori
             existingCategory.setName(name.trim());
             existingCategory.setDescription(description);
-            existingCategory.setIcon(icon != null && !icon.isEmpty() ? icon : existingCategory.getIcon());
-            existingCategory.setColor(color != null && !color.isEmpty() ? color : existingCategory.getColor());
             
             if (categoryDAO.update(existingCategory)) {
                 request.getSession().setAttribute("success", "Kategori berhasil diperbarui!");

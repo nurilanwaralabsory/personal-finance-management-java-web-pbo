@@ -149,11 +149,7 @@
                   <div class="card h-100">
                     <div class="card-body">
                       <div class="d-flex align-items-center mb-3">
-                        <div class="avatar me-3" style="background-color: <%= category.getColor() %>20;">
-                          <span class="avatar-initial rounded" style="background-color: <%= category.getColor() %>;">
-                            <i class="<%= category.getIcon() %> text-white"></i>
-                          </span>
-                        </div>
+                        
                         <div class="flex-grow-1">
                           <h6 class="mb-0"><%= category.getName() %></h6>
                           <small class="text-muted">

@@ -116,7 +116,7 @@ public class ExpenseDAO {
 
     // Ambil pengeluaran berdasarkan ID
     public Expense findById(int id, int userId) {
-        String sql = "SELECT e.*, c.name as category_name, c.icon as category_icon, c.color as category_color " +
+        String sql = "SELECT e.*, c.name as category_name " +
                      "FROM expenses e LEFT JOIN categories c ON e.category_id = c.id " +
                      "WHERE e.id = ? AND e.user_id = ?";
         Connection conn = null;
@@ -150,7 +150,7 @@ public class ExpenseDAO {
 
     // Ambil semua pengeluaran berdasarkan user
     public List<Expense> findAllByUserId(int userId) {
-        String sql = "SELECT e.*, c.name as category_name, c.icon as category_icon, c.color as category_color " +
+        String sql = "SELECT e.*, c.name as category_name " +
                      "FROM expenses e LEFT JOIN categories c ON e.category_id = c.id " +
                      "WHERE e.user_id = ? ORDER BY e.expense_date DESC, e.created_at DESC";
         List<Expense> expenses = new ArrayList<>();
@@ -184,7 +184,7 @@ public class ExpenseDAO {
 
     // Ambil pengeluaran berdasarkan rentang tanggal
     public List<Expense> findByDateRange(int userId, Date startDate, Date endDate) {
-        String sql = "SELECT e.*, c.name as category_name, c.icon as category_icon, c.color as category_color " +
+        String sql = "SELECT e.*, c.name as category_name " +
                      "FROM expenses e LEFT JOIN categories c ON e.category_id = c.id " +
                      "WHERE e.user_id = ? AND e.expense_date BETWEEN ? AND ? " +
                      "ORDER BY e.expense_date DESC, e.created_at DESC";
@@ -221,7 +221,7 @@ public class ExpenseDAO {
 
     // Ambil pengeluaran berdasarkan kategori
     public List<Expense> findByCategoryId(int userId, int categoryId) {
-        String sql = "SELECT e.*, c.name as category_name, c.icon as category_icon, c.color as category_color " +
+        String sql = "SELECT e.*, c.name as category_name " +
                      "FROM expenses e LEFT JOIN categories c ON e.category_id = c.id " +
                      "WHERE e.user_id = ? AND e.category_id = ? " +
                      "ORDER BY e.expense_date DESC, e.created_at DESC";
@@ -373,8 +373,6 @@ public class ExpenseDAO {
         // Mapping dari join dengan categories
         try {
             expense.setCategoryName(rs.getString("category_name"));
-            expense.setCategoryIcon(rs.getString("category_icon"));
-            expense.setCategoryColor(rs.getString("category_color"));
         } catch (SQLException e) {
             // Kolom tidak ada (query tanpa join)
         }

@@ -17,8 +17,6 @@ public class Expense {
     
     // Tambahan untuk join dengan category
     private String categoryName;
-    private String categoryIcon;
-    private String categoryColor;
 
     // Default constructor
     public Expense() {
@@ -136,22 +134,6 @@ public class Expense {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
-    }
-
-    public String getCategoryIcon() {
-        return categoryIcon;
-    }
-
-    public void setCategoryIcon(String categoryIcon) {
-        this.categoryIcon = categoryIcon;
-    }
-
-    public String getCategoryColor() {
-        return categoryColor;
-    }
-
-    public void setCategoryColor(String categoryColor) {
-        this.categoryColor = categoryColor;
     }
 
     @Override

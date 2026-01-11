@@ -187,8 +187,8 @@
                           <% if (income.getCategoryName() != null) { %>
                           <div class="d-flex align-items-center">
                             <div class="avatar avatar-sm me-2">
-                              <span class="avatar-initial rounded" style="background-color: <%= income.getCategoryColor() != null ? income.getCategoryColor() : "#7367f0" %>;">
-                                <i class="<%= income.getCategoryIcon() != null ? income.getCategoryIcon() : "ri-folder-line" %> text-white" style="font-size: 12px;"></i>
+                              <span class="avatar-initial rounded bg-success">
+                                <i class="ri-folder-line text-white" style="font-size: 12px;"></i>
                               </span>
                             </div>
                             <span><%= income.getCategoryName() %></span>

@@ -134,57 +134,7 @@
                                       placeholder="Masukkan deskripsi kategori (opsional)"><%= isEdit && category.getDescription() != null ? category.getDescription() : "" %></textarea>
                           </div>
                           
-                          <!-- Icon -->
-                          <div class="col-md-6">
-                            <label class="form-label" for="icon">Icon</label>
-                            <select class="form-select" id="icon" name="icon">
-                              <option value="ri-folder-line" <%= isEdit && "ri-folder-line".equals(category.getIcon()) ? "selected" : "" %>>📁 Folder</option>
-                              <option value="ri-money-dollar-circle-line" <%= isEdit && "ri-money-dollar-circle-line".equals(category.getIcon()) ? "selected" : "" %>>💰 Uang</option>
-                              <option value="ri-gift-line" <%= isEdit && "ri-gift-line".equals(category.getIcon()) ? "selected" : "" %>>🎁 Hadiah</option>
-                              <option value="ri-stock-line" <%= isEdit && "ri-stock-line".equals(category.getIcon()) ? "selected" : "" %>>📈 Investasi</option>
-                              <option value="ri-computer-line" <%= isEdit && "ri-computer-line".equals(category.getIcon()) ? "selected" : "" %>>💻 Komputer</option>
-                              <option value="ri-restaurant-line" <%= isEdit && "ri-restaurant-line".equals(category.getIcon()) ? "selected" : "" %>>🍽️ Makanan</option>
-                              <option value="ri-car-line" <%= isEdit && "ri-car-line".equals(category.getIcon()) ? "selected" : "" %>>🚗 Transportasi</option>
-                              <option value="ri-shopping-cart-line" <%= isEdit && "ri-shopping-cart-line".equals(category.getIcon()) ? "selected" : "" %>>🛒 Belanja</option>
-                              <option value="ri-file-list-line" <%= isEdit && "ri-file-list-line".equals(category.getIcon()) ? "selected" : "" %>>📋 Tagihan</option>
-                              <option value="ri-gamepad-line" <%= isEdit && "ri-gamepad-line".equals(category.getIcon()) ? "selected" : "" %>>🎮 Hiburan</option>
-                              <option value="ri-heart-pulse-line" <%= isEdit && "ri-heart-pulse-line".equals(category.getIcon()) ? "selected" : "" %>>❤️ Kesehatan</option>
-                              <option value="ri-book-open-line" <%= isEdit && "ri-book-open-line".equals(category.getIcon()) ? "selected" : "" %>>📚 Pendidikan</option>
-                              <option value="ri-home-line" <%= isEdit && "ri-home-line".equals(category.getIcon()) ? "selected" : "" %>>🏠 Rumah</option>
-                              <option value="ri-shirt-line" <%= isEdit && "ri-shirt-line".equals(category.getIcon()) ? "selected" : "" %>>👕 Pakaian</option>
-                              <option value="ri-plane-line" <%= isEdit && "ri-plane-line".equals(category.getIcon()) ? "selected" : "" %>>✈️ Perjalanan</option>
-                              <option value="ri-more-line" <%= isEdit && "ri-more-line".equals(category.getIcon()) ? "selected" : "" %>>⋯ Lainnya</option>
-                            </select>
-                          </div>
                           
-                          <!-- Warna -->
-                          <div class="col-md-6">
-                            <label class="form-label" for="color">Warna</label>
-                            <input type="color" class="form-control form-control-color w-100" id="color" name="color" 
-                                   value="<%= isEdit && category.getColor() != null ? category.getColor() : "#7367f0" %>">
-                          </div>
-                          
-                          <!-- Preview -->
-                          <div class="col-12">
-                            <label class="form-label">Preview</label>
-                            <div class="d-flex align-items-center p-3 border rounded">
-                              <div class="avatar me-3" id="previewAvatar">
-                                <span class="avatar-initial rounded" id="previewIcon" style="background-color: <%= isEdit && category.getColor() != null ? category.getColor() : "#7367f0" %>;">
-                                  <i class="<%= isEdit && category.getIcon() != null ? category.getIcon() : "ri-folder-line" %> text-white"></i>
-                                </span>
-                              </div>
-                              <div>
-                                <h6 class="mb-0" id="previewName"><%= isEdit ? category.getName() : "Nama Kategori" %></h6>
-                                <small class="text-muted">
-                                  <% if ("income".equals(type)) { %>
-                                    <span class="badge bg-label-success">Pemasukan</span>
-                                  <% } else { %>
-                                    <span class="badge bg-label-danger">Pengeluaran</span>
-                                  <% } %>
-                                </small>
-                              </div>
-                            </div>
-                          </div>
                           
                           <!-- Buttons -->
                           <div class="col-12">
@@ -212,9 +162,8 @@
                       </h6>
                       <ul class="list-unstyled mb-0 small">
                         <li class="mb-2">• Gunakan nama kategori yang jelas dan mudah diingat</li>
-                        <li class="mb-2">• Pilih icon yang sesuai dengan kategori</li>
-                        <li class="mb-2">• Gunakan warna berbeda untuk membedakan kategori</li>
-                        <li>• Deskripsi membantu menjelaskan kegunaan kategori</li>
+                        <li class="mb-2">• Deskripsi membantu menjelaskan kegunaan kategori</li>
+                        <li>• Pisahkan kategori pemasukan dan pengeluaran</li>
                       </ul>
                     </div>
                   </div>
@@ -249,21 +198,10 @@
     <script>
       // Live preview
       const nameInput = document.getElementById('name');
-      const iconSelect = document.getElementById('icon');
-      const colorInput = document.getElementById('color');
       const previewName = document.getElementById('previewName');
-      const previewIcon = document.getElementById('previewIcon');
       
       nameInput.addEventListener('input', function() {
         previewName.textContent = this.value || 'Nama Kategori';
-      });
-      
-      iconSelect.addEventListener('change', function() {
-        previewIcon.innerHTML = '<i class="' + this.value + ' text-white"></i>';
-      });
-      
-      colorInput.addEventListener('input', function() {
-        previewIcon.style.backgroundColor = this.value;
       });
     </script>
   </body>

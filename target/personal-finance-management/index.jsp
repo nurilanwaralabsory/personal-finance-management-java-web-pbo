@@ -1,4 +1,64 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+﻿<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.math.BigDecimal" %>
+<%@ page import="model.User" %>
+<%@ page import="model.Category" %>
+<%@ page import="model.Budget" %>
+<%@ page import="model.Income" %>
+<%@ page import="model.Expense" %>
+<%
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect(request.getContextPath() + "/login");
+        return;
+    }
+    
+    // Get data from request attributes
+    BigDecimal totalBalance = (BigDecimal) request.getAttribute("totalBalance");
+    BigDecimal balanceThisMonth = (BigDecimal) request.getAttribute("balanceThisMonth");
+    BigDecimal totalIncome = (BigDecimal) request.getAttribute("totalIncome");
+    BigDecimal incomeThisMonth = (BigDecimal) request.getAttribute("incomeThisMonth");
+    BigDecimal totalExpense = (BigDecimal) request.getAttribute("totalExpense");
+    BigDecimal expenseThisMonth = (BigDecimal) request.getAttribute("expenseThisMonth");
+    Integer totalCategories = (Integer) request.getAttribute("totalCategories");
+    Integer totalTransactions = (Integer) request.getAttribute("totalTransactions");
+    List<Object[]> latestTransactions = (List<Object[]>) request.getAttribute("latestTransactions");
+    List<Category> expenseCategories = (List<Category>) request.getAttribute("expenseCategories");
+    List<Budget> budgets = (List<Budget>) request.getAttribute("budgets");
+    List<Income> recentIncomes = (List<Income>) request.getAttribute("recentIncomes");
+    List<Expense> recentExpenses = (List<Expense>) request.getAttribute("recentExpenses");
+    
+    // Default values if null
+    if (totalBalance == null) totalBalance = BigDecimal.ZERO;
+    if (balanceThisMonth == null) balanceThisMonth = BigDecimal.ZERO;
+    if (totalIncome == null) totalIncome = BigDecimal.ZERO;
+    if (incomeThisMonth == null) incomeThisMonth = BigDecimal.ZERO;
+    if (totalExpense == null) totalExpense = BigDecimal.ZERO;
+    if (expenseThisMonth == null) expenseThisMonth = BigDecimal.ZERO;
+    if (totalCategories == null) totalCategories = 0;
+    if (totalTransactions == null) totalTransactions = 0;
+    
+    // Format currency
+    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", new Locale("id", "ID"));
+%>
+<%!
+    // Helper function to format short currency
+    String formatShortCurrency(BigDecimal amount, NumberFormat currencyFormat) {
+        if (amount == null) return "Rp 0";
+        if (amount.compareTo(new BigDecimal("1000000000")) >= 0) {
+            return "Rp " + amount.divide(new BigDecimal("1000000000"), 1, java.math.RoundingMode.HALF_UP) + "M";
+        } else if (amount.compareTo(new BigDecimal("1000000")) >= 0) {
+            return "Rp " + amount.divide(new BigDecimal("1000000"), 1, java.math.RoundingMode.HALF_UP) + "jt";
+        } else if (amount.compareTo(new BigDecimal("1000")) >= 0) {
+            return "Rp " + amount.divide(new BigDecimal("1000"), 0, java.math.RoundingMode.HALF_UP) + "rb";
+        }
+        return currencyFormat.format(amount);
+    }
+%>
 <!doctype html>
 
 <html
@@ -84,236 +144,7 @@
         <div class="layout-page">
           <!-- Navbar -->
 
-          <nav
-            class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
-            id="layout-navbar">
-            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
-              <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
-                <i class="icon-base ri ri-menu-line icon-22px"></i>
-              </a>
-            </div>
-
-            <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
-              <!-- Search -->
-              <div class="navbar-nav align-items-center">
-                <div class="nav-item navbar-search-wrapper mb-0">
-                  <a class="nav-item nav-link search-toggler px-0" href="javascript:void(0);">
-                    <span class="d-inline-block text-body-secondary fw-normal" id="autocomplete"></span>
-                  </a>
-                </div>
-              </div>
-
-              <!-- /Search -->
-
-              <ul class="navbar-nav flex-row align-items-center ms-md-auto">
-                <li class="nav-item dropdown-language dropdown me-sm-2 me-xl-0">
-                  <a
-                    class="nav-link dropdown-toggle hide-arrow btn btn-icon btn-text-secondary rounded-pill"
-                    href="javascript:void(0);"
-                    data-bs-toggle="dropdown">
-                    <i class="icon-base ri ri-translate-2 icon-22px"></i>
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                      <a class="dropdown-item" href="javascript:void(0);" data-language="en" data-text-direction="ltr">
-                        <span>English</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="javascript:void(0);" data-language="fr" data-text-direction="ltr">
-                        <span>French</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="javascript:void(0);" data-language="ar" data-text-direction="rtl">
-                        <span>Arabic</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="javascript:void(0);" data-language="de" data-text-direction="ltr">
-                        <span>German</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <!--/ Language -->
-
-                <!-- Style Switcher -->
-                <li class="nav-item dropdown me-sm-2 me-xl-0">
-                  <a
-                    class="nav-link dropdown-toggle hide-arrow btn btn-icon btn-text-secondary rounded-pill"
-                    id="nav-theme"
-                    href="javascript:void(0);"
-                    data-bs-toggle="dropdown">
-                    <i class="icon-base ri ri-sun-line icon-22px theme-icon-active"></i>
-                    <span class="d-none ms-2" id="nav-theme-text">Toggle theme</span>
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-theme-text">
-                    <li>
-                      <button
-                        type="button"
-                        class="dropdown-item align-items-center active"
-                        data-bs-theme-value="light"
-                        aria-pressed="false">
-                        <span><i class="icon-base ri ri-sun-line icon-22px me-3" data-icon="sun-line"></i>Light</span>
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        type="button"
-                        class="dropdown-item align-items-center"
-                        data-bs-theme-value="dark"
-                        aria-pressed="true">
-                        <span
-                          ><i class="icon-base ri ri-moon-clear-line icon-22px me-3" data-icon="moon-clear-line"></i
-                          >Dark</span
-                        >
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        type="button"
-                        class="dropdown-item align-items-center"
-                        data-bs-theme-value="system"
-                        aria-pressed="false">
-                        <span
-                          ><i class="icon-base ri ri-computer-line icon-22px me-3" data-icon="computer-line"></i
-                          >System</span
-                        >
-                      </button>
-                    </li>
-                  </ul>
-                </li>
-                <!-- / Style Switcher-->
-
-                <!-- Quick links -->
-                <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-sm-2 me-xl-0">
-                  <a
-                    class="nav-link dropdown-toggle hide-arrow btn btn-icon btn-text-secondary rounded-pill"
-                    href="javascript:void(0);"
-                    data-bs-toggle="dropdown"
-                    <!-- Navbar -->
-                    <%@ include file="components/navbar.jsp" %>
-                    <!-- / Navbar -->
-                        </li>
-                        <li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
-                          <div class="d-flex">
-                            <div class="flex-shrink-0 me-3">
-                              <div class="avatar">
-                                <span class="avatar-initial rounded-circle bg-label-warning"
-                                  ><i class="icon-base ri ri-error-warning-line icon-18px"></i
-                                ></span>
-                              </div>
-                            </div>
-                            <div class="flex-grow-1">
-                              <h6 class="small mb-1">CPU is running high</h6>
-                              <small class="mb-1 d-block text-body"
-                                >CPU Utilization Percent is currently at 88.63%,</small
-                              >
-                              <small class="text-body-secondary">5 days ago</small>
-                            </div>
-                            <div class="flex-shrink-0 dropdown-notifications-actions">
-                              <a href="javascript:void(0)" class="dropdown-notifications-read"
-                                ><span class="badge badge-dot"></span
-                              ></a>
-                              <a href="javascript:void(0)" class="dropdown-notifications-archive"
-                                ><span class="icon-base ri ri-close-line"></span
-                              ></a>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="border-top">
-                      <div class="d-grid p-4">
-                        <a class="btn btn-primary btn-sm d-flex" href="javascript:void(0);">
-                          <small class="align-middle">View all notifications</small>
-                        </a>
-                      </div>
-                    </li>
-                  </ul>
-                </li>
-                <!--/ Notification -->
-
-                <!-- User -->
-                <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                    <div class="avatar avatar-online">
-                      <img src="templates/assets/img/avatars/1.png" alt="avatar" class="rounded-circle" />
-                    </div>
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
-                    <li>
-                      <a class="dropdown-item" href="pages-account-settings-account.html">
-                        <div class="d-flex align-items-center">
-                          <div class="flex-shrink-0 me-2">
-                            <div class="avatar avatar-online">
-                              <img
-                                src="templates/assets/img/avatars/1.png"
-                                alt="alt"
-                                class="w-px-40 h-auto rounded-circle" />
-                            </div>
-                          </div>
-                          <div class="flex-grow-1">
-                            <h6 class="mb-0 small"><%= session.getAttribute("username") != null ? session.getAttribute("username") : "User" %></h6>
-                            <small class="text-body-secondary">Member</small>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="pages-profile-user.html">
-                        <i class="icon-base ri ri-user-3-line icon-22px me-3"></i
-                        ><span class="align-middle">My Profile</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="pages-account-settings-account.html">
-                        <i class="icon-base ri ri-settings-4-line icon-22px me-3"></i
-                        ><span class="align-middle">Settings</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="pages-account-settings-billing.html">
-                        <span class="d-flex align-items-center align-middle">
-                          <i class="flex-shrink-0 icon-base ri ri-file-text-line icon-22px me-3"></i>
-                          <span class="flex-grow-1 align-middle">Billing Plan</span>
-                          <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger">4</span>
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="pages-pricing.html">
-                        <i class="icon-base ri ri-money-dollar-circle-line icon-22px me-3"></i
-                        ><span class="align-middle">Pricing</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="pages-faq.html">
-                        <i class="icon-base ri ri-question-line icon-22px me-3"></i
-                        ><span class="align-middle">FAQ</span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="d-grid px-4 pt-2 pb-1">
-                        <a class="btn btn-sm btn-danger d-flex" href="${pageContext.request.contextPath}/logout">
-                          <small class="align-middle">Logout</small>
-                          <i class="icon-base ri ri-logout-box-r-line ms-2 icon-16px"></i>
-                        </a>
-                      </div>
-                    </li>
-                  </ul>
-                </li>
-                <!--/ User -->
-              </ul>
-            </div>
-          </nav>
+          <%@ include file="components/navbar.jsp" %>
 
           <!-- / Navbar -->
 
@@ -328,10 +159,10 @@
                     <div class="d-flex align-items-end row">
                       <div class="col-md-6 order-2 order-md-1">
                         <div class="card-body">
-                          <h4 class="card-title mb-4">Selamat Datang! 👋</h4>
+                          <h4 class="card-title mb-4">Selamat Datang, <%= user.getUsername() %>! 👋</h4>
                           <p class="mb-0">Kelola keuangan pribadi Anda dengan mudah.</p>
                           <p>Pantau pemasukan, pengeluaran, dan anggaran Anda.</p>
-                          <a href="transactions.jsp" class="btn btn-primary">Tambah Transaksi</a>
+                          <a href="<%= request.getContextPath() %>/incomes?action=add" class="btn btn-primary">Tambah Transaksi</a>
                         </div>
                       </div>
                       <div class="col-md-6 text-center text-md-end order-1 order-md-2">
@@ -361,14 +192,19 @@
                           </div>
                         </div>
                         <div class="d-flex align-items-center">
-                          <p class="mb-0 text-success me-1">+12%</p>
+                          <% if (balanceThisMonth.compareTo(BigDecimal.ZERO) >= 0) { %>
+                          <p class="mb-0 text-success me-1">+</p>
                           <i class="icon-base ri ri-arrow-up-s-line text-success"></i>
+                          <% } else { %>
+                          <p class="mb-0 text-danger me-1">-</p>
+                          <i class="icon-base ri ri-arrow-down-s-line text-danger"></i>
+                          <% } %>
                         </div>
                       </div>
                       <div class="card-info mt-5">
-                        <h5 class="mb-1">Rp 15.250.000</h5>
+                        <h5 class="mb-1"><%= currencyFormat.format(totalBalance) %></h5>
                         <p>Total Saldo</p>
-                        <div class="badge bg-label-secondary rounded-pill">Bulan Ini</div>
+                        <div class="badge bg-label-secondary rounded-pill">Keseluruhan</div>
                       </div>
                     </div>
                   </div>
@@ -386,12 +222,12 @@
                           </div>
                         </div>
                         <div class="d-flex align-items-center">
-                          <p class="mb-0 text-success me-1">+8%</p>
+                          <p class="mb-0 text-success me-1">+</p>
                           <i class="icon-base ri ri-arrow-up-s-line text-success"></i>
                         </div>
                       </div>
                       <div class="card-info mt-5">
-                        <h5 class="mb-1">Rp 8.500.000</h5>
+                        <h5 class="mb-1"><%= currencyFormat.format(incomeThisMonth) %></h5>
                         <p>Pemasukan</p>
                         <div class="badge bg-label-secondary rounded-pill">Bulan Ini</div>
                       </div>
@@ -409,7 +245,7 @@
                           <div class="col-sm-6 col-lg-3">
                             <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-4 pb-sm-0">
                               <div>
-                                <h4 class="mb-0">Rp 8.5jt</h4>
+                                <h4 class="mb-0"><%= currencyFormat.format(totalIncome) %></h4>
                                 <p class="mb-0">Total Pemasukan</p>
                               </div>
                               <div class="avatar me-sm-6">
@@ -423,7 +259,7 @@
                           <div class="col-sm-6 col-lg-3">
                             <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-4 pb-sm-0">
                               <div>
-                                <h4 class="mb-0">Rp 3.2jt</h4>
+                                <h4 class="mb-0"><%= currencyFormat.format(totalExpense) %></h4>
                                 <p class="mb-0">Total Pengeluaran</p>
                               </div>
                               <div class="avatar me-lg-6">
@@ -437,7 +273,7 @@
                           <div class="col-sm-6 col-lg-3">
                             <div class="d-flex justify-content-between align-items-start border-end pb-4 pb-sm-0 card-widget-3">
                               <div>
-                                <h4 class="mb-0">24</h4>
+                                <h4 class="mb-0"><%= totalTransactions %></h4>
                                 <p class="mb-0">Total Transaksi</p>
                               </div>
                               <div class="avatar me-sm-6">
@@ -450,7 +286,7 @@
                           <div class="col-sm-6 col-lg-3">
                             <div class="d-flex justify-content-between align-items-start">
                               <div>
-                                <h4 class="mb-0">5</h4>
+                                <h4 class="mb-0"><%= totalCategories %></h4>
                                 <p class="mb-0">Kategori Aktif</p>
                               </div>
                               <div class="avatar">
@@ -467,237 +303,7 @@
                 </div>
                 <!--/ Cards Statistics -->
 
-                <!-- Budget Overview -->
-                <div class="col-12 col-xxl-8">
-                  <div class="card h-100">
-                    <div class="card-header d-flex justify-content-between">
-                      <div>
-                        <h5 class="card-title mb-1">Ringkasan Anggaran</h5>
-                        <p class="card-subtitle mb-0">Penggunaan anggaran bulan ini</p>
-                      </div>
-                      <div class="dropdown">
-                        <button class="btn btn-text-secondary rounded-pill text-body-secondary border-0 p-1" type="button" id="budgetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="icon-base ri ri-more-2-line"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="budgetDropdown">
-                          <a class="dropdown-item" href="budgets.jsp">Lihat Semua</a>
-                          <a class="dropdown-item" href="budgets.jsp">Kelola Anggaran</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-body">
-                      <div class="row g-4">
-                        <!-- Makanan & Minuman -->
-                        <div class="col-md-6">
-                          <div class="d-flex align-items-center mb-2">
-                            <div class="avatar avatar-sm me-3">
-                              <span class="avatar-initial rounded-3 bg-label-primary">
-                                <i class="icon-base ri ri-restaurant-line"></i>
-                              </span>
-                            </div>
-                            <div class="w-100">
-                              <div class="d-flex justify-content-between mb-1">
-                                <span class="fw-medium">Makanan & Minuman</span>
-                                <span class="text-body-secondary">Rp 850.000 / Rp 1.000.000</span>
-                              </div>
-                              <div class="progress" style="height: 8px;">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 85%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- Transportasi -->
-                        <div class="col-md-6">
-                          <div class="d-flex align-items-center mb-2">
-                            <div class="avatar avatar-sm me-3">
-                              <span class="avatar-initial rounded-3 bg-label-info">
-                                <i class="icon-base ri ri-car-line"></i>
-                              </span>
-                            </div>
-                            <div class="w-100">
-                              <div class="d-flex justify-content-between mb-1">
-                                <span class="fw-medium">Transportasi</span>
-                                <span class="text-body-secondary">Rp 400.000 / Rp 500.000</span>
-                              </div>
-                              <div class="progress" style="height: 8px;">
-                                <div class="progress-bar bg-info" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- Belanja -->
-                        <div class="col-md-6">
-                          <div class="d-flex align-items-center mb-2">
-                            <div class="avatar avatar-sm me-3">
-                              <span class="avatar-initial rounded-3 bg-label-warning">
-                                <i class="icon-base ri ri-shopping-bag-line"></i>
-                              </span>
-                            </div>
-                            <div class="w-100">
-                              <div class="d-flex justify-content-between mb-1">
-                                <span class="fw-medium">Belanja</span>
-                                <span class="text-body-secondary">Rp 600.000 / Rp 800.000</span>
-                              </div>
-                              <div class="progress" style="height: 8px;">
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- Hiburan -->
-                        <div class="col-md-6">
-                          <div class="d-flex align-items-center mb-2">
-                            <div class="avatar avatar-sm me-3">
-                              <span class="avatar-initial rounded-3 bg-label-success">
-                                <i class="icon-base ri ri-movie-line"></i>
-                              </span>
-                            </div>
-                            <div class="w-100">
-                              <div class="d-flex justify-content-between mb-1">
-                                <span class="fw-medium">Hiburan</span>
-                                <span class="text-body-secondary">Rp 150.000 / Rp 300.000</span>
-                              </div>
-                              <div class="progress" style="height: 8px;">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- Tagihan -->
-                        <div class="col-md-6">
-                          <div class="d-flex align-items-center mb-2">
-                            <div class="avatar avatar-sm me-3">
-                              <span class="avatar-initial rounded-3 bg-label-danger">
-                                <i class="icon-base ri ri-bill-line"></i>
-                              </span>
-                            </div>
-                            <div class="w-100">
-                              <div class="d-flex justify-content-between mb-1">
-                                <span class="fw-medium">Tagihan</span>
-                                <span class="text-body-secondary">Rp 1.200.000 / Rp 1.200.000</span>
-                              </div>
-                              <div class="progress" style="height: 8px;">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- Tabungan -->
-                        <div class="col-md-6">
-                          <div class="d-flex align-items-center mb-2">
-                            <div class="avatar avatar-sm me-3">
-                              <span class="avatar-initial rounded-3 bg-label-secondary">
-                                <i class="icon-base ri ri-safe-line"></i>
-                              </span>
-                            </div>
-                            <div class="w-100">
-                              <div class="d-flex justify-content-between mb-1">
-                                <span class="fw-medium">Tabungan</span>
-                                <span class="text-body-secondary">Rp 500.000 / Rp 1.000.000</span>
-                              </div>
-                              <div class="progress" style="height: 8px;">
-                                <div class="progress-bar bg-secondary" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!--/ Budget Overview -->
-
-                <!-- Pengeluaran per Kategori -->
-                <div class="col-12 col-xxl-4 col-md-6">
-                  <div class="card h-100">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                      <h5 class="card-title m-0 me-2">Pengeluaran per Kategori</h5>
-                      <div class="dropdown">
-                        <button class="btn btn-text-secondary rounded-pill text-body-secondary border-0 p-1" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="icon-base ri ri-more-2-line"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="categoryDropdown">
-                          <a class="dropdown-item" href="categories.jsp">Lihat Semua</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-body">
-                      <ul class="p-0 m-0">
-                        <li class="d-flex align-items-center mb-6">
-                          <div class="avatar avatar-md flex-shrink-0 me-4">
-                            <span class="avatar-initial rounded-3 bg-label-primary">
-                              <i class="icon-base ri ri-restaurant-line"></i>
-                            </span>
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <h6 class="mb-1">Makanan & Minuman</h6>
-                              <small class="text-body-secondary">8 transaksi</small>
-                            </div>
-                            <div class="badge bg-label-primary rounded-pill">Rp 850.000</div>
-                          </div>
-                        </li>
-                        <li class="d-flex align-items-center mb-6">
-                          <div class="avatar avatar-md flex-shrink-0 me-4">
-                            <span class="avatar-initial rounded-3 bg-label-danger">
-                              <i class="icon-base ri ri-bill-line"></i>
-                            </span>
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <h6 class="mb-1">Tagihan</h6>
-                              <small class="text-body-secondary">3 transaksi</small>
-                            </div>
-                            <div class="badge bg-label-danger rounded-pill">Rp 1.200.000</div>
-                          </div>
-                        </li>
-                        <li class="d-flex align-items-center mb-6">
-                          <div class="avatar avatar-md flex-shrink-0 me-4">
-                            <span class="avatar-initial rounded-3 bg-label-warning">
-                              <i class="icon-base ri ri-shopping-bag-line"></i>
-                            </span>
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <h6 class="mb-1">Belanja</h6>
-                              <small class="text-body-secondary">5 transaksi</small>
-                            </div>
-                            <div class="badge bg-label-warning rounded-pill">Rp 600.000</div>
-                          </div>
-                        </li>
-                        <li class="d-flex align-items-center mb-6">
-                          <div class="avatar avatar-md flex-shrink-0 me-4">
-                            <span class="avatar-initial rounded-3 bg-label-info">
-                              <i class="icon-base ri ri-car-line"></i>
-                            </span>
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <h6 class="mb-1">Transportasi</h6>
-                              <small class="text-body-secondary">6 transaksi</small>
-                            </div>
-                            <div class="badge bg-label-info rounded-pill">Rp 400.000</div>
-                          </div>
-                        </li>
-                        <li class="d-flex align-items-center">
-                          <div class="avatar avatar-md flex-shrink-0 me-4">
-                            <span class="avatar-initial rounded-3 bg-label-success">
-                              <i class="icon-base ri ri-movie-line"></i>
-                            </span>
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <h6 class="mb-1">Hiburan</h6>
-                              <small class="text-body-secondary">2 transaksi</small>
-                            </div>
-                            <div class="badge bg-label-success rounded-pill">Rp 150.000</div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <!--/ Pengeluaran per Kategori -->
+               
 
                 <!-- Transaksi Terakhir -->
                 <div class="col-12 col-xxl-8">
@@ -708,7 +314,7 @@
                         <p class="card-subtitle mb-0">Riwayat transaksi terbaru</p>
                       </div>
                       <div>
-                        <a href="transactions.jsp" class="btn btn-primary btn-sm">Lihat Semua</a>
+                        <a href="<%= request.getContextPath() %>/incomes" class="btn btn-primary btn-sm">Lihat Semua</a>
                       </div>
                     </div>
                     <div class="card-body pb-0">
@@ -723,36 +329,31 @@
                             </tr>
                           </thead>
                           <tbody class="table-border-bottom-0">
+                            <% if (latestTransactions != null && !latestTransactions.isEmpty()) {
+                                for (Object[] transaction : latestTransactions) {
+                                    java.sql.Date txDate = (java.sql.Date) transaction[0];
+                                    String txDesc = (String) transaction[1];
+                                    String txCategory = (String) transaction[2];
+                                    BigDecimal txAmount = (BigDecimal) transaction[3];
+                                    String txType = (String) transaction[4];
+                                    boolean isIncome = "income".equals(txType);
+                            %>
                             <tr>
-                              <td>26 Des 2025</td>
-                              <td>Makan siang</td>
-                              <td><span class="badge bg-label-primary rounded-pill">Makanan</span></td>
-                              <td class="text-end text-danger fw-medium">- Rp 35.000</td>
+                              <td><%= txDate != null ? dateFormat.format(txDate) : "-" %></td>
+                              <td><%= txDesc != null && !txDesc.isEmpty() ? txDesc : "-" %></td>
+                              <td><span class="badge bg-label-<%= isIncome ? "success" : "danger" %> rounded-pill"><%= txCategory != null ? txCategory : "-" %></span></td>
+                              <td class="text-end <%= isIncome ? "text-success" : "text-danger" %> fw-medium">
+                                <%= isIncome ? "+ " : "- " %><%= txAmount != null ? currencyFormat.format(txAmount) : "Rp 0" %>
+                              </td>
                             </tr>
+                            <% } } else { %>
                             <tr>
-                              <td>25 Des 2025</td>
-                              <td>Gaji Bulanan</td>
-                              <td><span class="badge bg-label-success rounded-pill">Pemasukan</span></td>
-                              <td class="text-end text-success fw-medium">+ Rp 8.500.000</td>
+                              <td colspan="4" class="text-center py-4 text-muted">
+                                <i class="ri ri-inbox-line ri-2x mb-2 d-block"></i>
+                                Belum ada transaksi
+                              </td>
                             </tr>
-                            <tr>
-                              <td>24 Des 2025</td>
-                              <td>Listrik PLN</td>
-                              <td><span class="badge bg-label-danger rounded-pill">Tagihan</span></td>
-                              <td class="text-end text-danger fw-medium">- Rp 450.000</td>
-                            </tr>
-                            <tr>
-                              <td>23 Des 2025</td>
-                              <td>Grab Car</td>
-                              <td><span class="badge bg-label-info rounded-pill">Transportasi</span></td>
-                              <td class="text-end text-danger fw-medium">- Rp 75.000</td>
-                            </tr>
-                            <tr>
-                              <td>22 Des 2025</td>
-                              <td>Belanja Groceries</td>
-                              <td><span class="badge bg-label-warning rounded-pill">Belanja</span></td>
-                              <td class="text-end text-danger fw-medium">- Rp 320.000</td>
-                            </tr>
+                            <% } %>
                           </tbody>
                         </table>
                       </div>
@@ -760,6 +361,119 @@
                   </div>
                 </div>
                 <!--/ Transaksi Terakhir -->
+
+                 <!-- Pengeluaran per Kategori -->
+                <div class="col-12 col-xxl-4 col-md-6">
+                  <div class="card h-100">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                      <h5 class="card-title m-0 me-2">Pengeluaran per Kategori</h5>
+                      <div class="dropdown">
+                        <button class="btn btn-text-secondary rounded-pill text-body-secondary border-0 p-1" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="icon-base ri ri-more-2-line"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="categoryDropdown">
+                          <a class="dropdown-item" href="<%= request.getContextPath() %>/categories">Lihat Semua</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <ul class="p-0 m-0">
+                        <% if (expenseCategories != null && !expenseCategories.isEmpty()) {
+                            String[] colors = {"primary", "danger", "warning", "info", "success", "secondary"};
+                            int colorIndex = 0;
+                            for (Category cat : expenseCategories) { 
+                                String color = colors[colorIndex % colors.length];
+                                colorIndex++;
+                        %>
+                        <li class="d-flex align-items-center mb-4">
+                          <div class="avatar avatar-md flex-shrink-0 me-4">
+                            <span class="avatar-initial rounded-3 bg-label-<%= color %>">
+                              <i class="icon-base ri ri-folder-line"></i>
+                            </span>
+                          </div>
+                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                            <div class="me-2">
+                              <h6 class="mb-1"><%= cat.getName() != null ? cat.getName() : "Kategori" %></h6>
+                              <small class="text-body-secondary"><%= cat.getDescription() != null ? cat.getDescription() : "Kategori pengeluaran" %></small>
+                            </div>
+                          </div>
+                        </li>
+                        <% } } else { %>
+                        <li class="text-center py-4 text-muted">
+                          <i class="ri ri-folder-line ri-2x mb-2 d-block"></i>
+                          Belum ada kategori pengeluaran
+                        </li>
+                        <% } %>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <!--/ Pengeluaran per Kategori -->
+
+                 <!-- Budget Overview -->
+                <div class="col-12 col-xxl-8">
+                  <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between">
+                      <div>
+                        <h5 class="card-title mb-1">Ringkasan Anggaran</h5>
+                        <p class="card-subtitle mb-0">Penggunaan anggaran bulan ini</p>
+                      </div>
+                      <div class="dropdown">
+                        <button class="btn btn-text-secondary rounded-pill text-body-secondary border-0 p-1" type="button" id="budgetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="icon-base ri ri-more-2-line"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="budgetDropdown">
+                          <a class="dropdown-item" href="<%= request.getContextPath() %>/budgets">Lihat Semua</a>
+                          <a class="dropdown-item" href="<%= request.getContextPath() %>/budgets">Kelola Anggaran</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row g-4">
+                        <% if (budgets != null && !budgets.isEmpty()) {
+                            String[] budgetColors = {"primary", "info", "warning", "success", "danger", "secondary"};
+                            int budgetColorIndex = 0;
+                            for (Budget budget : budgets) {
+                                String budgetColor = budgetColors[budgetColorIndex % budgetColors.length];
+                                budgetColorIndex++;
+                                double usedAmount = budget.getSpent() != null ? budget.getSpent().doubleValue() : 0;
+                                double limitAmount = budget.getAmount() != null ? budget.getAmount().doubleValue() : 1;
+                                int percentage = (int) Math.min(100, (usedAmount / limitAmount) * 100);
+                                String progressColor = percentage >= 90 ? "danger" : (percentage >= 75 ? "warning" : budgetColor);
+                        %>
+                        <div class="col-md-6">
+                          <div class="d-flex align-items-center mb-2">
+                            <div class="avatar avatar-sm me-3">
+                              <span class="avatar-initial rounded-3 bg-label-<%= budgetColor %>">
+                                <i class="icon-base ri ri-wallet-line"></i>
+                              </span>
+                            </div>
+                            <div class="w-100">
+                              <div class="d-flex justify-content-between mb-1">
+                                <span class="fw-medium"><%= budget.getCategoryName() != null ? budget.getCategoryName() : "Anggaran" %></span>
+                                <span class="text-body-secondary"><%= currencyFormat.format(usedAmount) %> / <%= currencyFormat.format(limitAmount) %></span>
+                              </div>
+                              <div class="progress" style="height: 8px;">
+                                <div class="progress-bar bg-<%= progressColor %>" role="progressbar" style="width: <%= percentage %>%;" aria-valuenow="<%= percentage %>" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <% } } else { %>
+                        <div class="col-12 text-center py-4 text-muted">
+                          <i class="ri ri-wallet-line ri-2x mb-2 d-block"></i>
+                          Belum ada anggaran yang dibuat
+                        </div>
+                        <% } %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--/ Budget Overview -->
+
+               
+
+                
 
                 <!-- Quick Actions -->
                 <div class="col-12 col-xxl-4 col-md-6">
@@ -770,27 +484,27 @@
                     <div class="card-body">
                       <div class="row g-4">
                         <div class="col-6">
-                          <a href="income.jsp" class="btn btn-outline-success w-100 d-flex flex-column align-items-center py-4">
+                          <a href="<%= request.getContextPath() %>/incomes?action=add" class="btn btn-outline-success w-100 d-flex flex-column align-items-center py-4">
                             <i class="icon-base ri ri-add-circle-line icon-24px mb-2"></i>
                             <span>Tambah Pemasukan</span>
                           </a>
                         </div>
                         <div class="col-6">
-                          <a href="expense.jsp" class="btn btn-outline-danger w-100 d-flex flex-column align-items-center py-4">
+                          <a href="<%= request.getContextPath() %>/expenses?action=add" class="btn btn-outline-danger w-100 d-flex flex-column align-items-center py-4">
                             <i class="icon-base ri ri-subtract-line icon-24px mb-2"></i>
                             <span>Tambah Pengeluaran</span>
                           </a>
                         </div>
                         <div class="col-6">
-                          <a href="categories.jsp" class="btn btn-outline-warning w-100 d-flex flex-column align-items-center py-4">
+                          <a href="<%= request.getContextPath() %>/categories" class="btn btn-outline-warning w-100 d-flex flex-column align-items-center py-4">
                             <i class="icon-base ri ri-price-tag-3-line icon-24px mb-2"></i>
                             <span>Kelola Kategori</span>
                           </a>
                         </div>
                         <div class="col-6">
-                          <a href="report-monthly.jsp" class="btn btn-outline-info w-100 d-flex flex-column align-items-center py-4">
-                            <i class="icon-base ri ri-bar-chart-2-line icon-24px mb-2"></i>
-                            <span>Lihat Laporan</span>
+                          <a href="<%= request.getContextPath() %>/budgets" class="btn btn-outline-info w-100 d-flex flex-column align-items-center py-4">
+                            <i class="icon-base ri ri-wallet-line icon-24px mb-2"></i>
+                            <span>Kelola Anggaran</span>
                           </a>
                         </div>
                       </div>
@@ -809,39 +523,53 @@
                     </div>
                     <div class="card-body pt-4">
                       <ul class="timeline card-timeline mb-0">
+                        <% 
+                        // Combine recent incomes and expenses for activity timeline
+                        if ((recentIncomes != null && !recentIncomes.isEmpty()) || (recentExpenses != null && !recentExpenses.isEmpty())) {
+                            // Show latest incomes
+                            if (recentIncomes != null) {
+                                int incomeCount = 0;
+                                for (Income inc : recentIncomes) {
+                                    if (incomeCount >= 2) break;
+                                    incomeCount++;
+                        %>
                         <li class="timeline-item timeline-item-transparent">
                           <span class="timeline-point timeline-point-success"></span>
                           <div class="timeline-event">
                             <div class="timeline-header mb-3">
-                              <h6 class="mb-0">Pemasukan: Gaji Bulanan</h6>
-                              <small class="text-body-secondary">25 Des 2025</small>
+                              <h6 class="mb-0">Pemasukan: <%= inc.getDescription() != null ? inc.getDescription() : (inc.getSource() != null ? inc.getSource() : "-") %></h6>
+                              <small class="text-body-secondary"><%= inc.getIncomeDate() != null ? dateFormat.format(inc.getIncomeDate()) : "-" %></small>
                             </div>
-                            <p class="mb-2">Menerima gaji bulanan dari perusahaan</p>
-                            <div class="badge bg-label-success rounded-pill">+ Rp 8.500.000</div>
+                            <p class="mb-2"><%= inc.getCategoryName() != null ? inc.getCategoryName() : "Pemasukan" %></p>
+                            <div class="badge bg-label-success rounded-pill">+ <%= inc.getAmount() != null ? currencyFormat.format(inc.getAmount()) : "Rp 0" %></div>
                           </div>
                         </li>
+                        <% } }
+                            // Show latest expenses
+                            if (recentExpenses != null) {
+                                int expenseCount = 0;
+                                for (Expense exp : recentExpenses) {
+                                    if (expenseCount >= 2) break;
+                                    expenseCount++;
+                        %>
                         <li class="timeline-item timeline-item-transparent">
                           <span class="timeline-point timeline-point-danger"></span>
                           <div class="timeline-event">
                             <div class="timeline-header mb-3">
-                              <h6 class="mb-0">Pengeluaran: Tagihan Listrik</h6>
-                              <small class="text-body-secondary">24 Des 2025</small>
+                              <h6 class="mb-0">Pengeluaran: <%= exp.getDescription() != null ? exp.getDescription() : (exp.getRecipient() != null ? exp.getRecipient() : "-") %></h6>
+                              <small class="text-body-secondary"><%= exp.getExpenseDate() != null ? dateFormat.format(exp.getExpenseDate()) : "-" %></small>
                             </div>
-                            <p class="mb-2">Pembayaran tagihan PLN bulan Desember</p>
-                            <div class="badge bg-label-danger rounded-pill">- Rp 450.000</div>
+                            <p class="mb-2"><%= exp.getCategoryName() != null ? exp.getCategoryName() : "Pengeluaran" %></p>
+                            <div class="badge bg-label-danger rounded-pill">- <%= exp.getAmount() != null ? currencyFormat.format(exp.getAmount()) : "Rp 0" %></div>
                           </div>
                         </li>
-                        <li class="timeline-item timeline-item-transparent">
-                          <span class="timeline-point timeline-point-warning"></span>
-                          <div class="timeline-event">
-                            <div class="timeline-header mb-3">
-                              <h6 class="mb-0">Anggaran Tercapai: Makanan</h6>
-                              <small class="text-body-secondary">23 Des 2025</small>
-                            </div>
-                            <p class="mb-2">Anggaran makanan sudah mencapai 85% dari limit</p>
-                            <div class="badge bg-label-warning rounded-pill">Peringatan</div>
-                          </div>
+                        <% } }
+                        } else { %>
+                        <li class="text-center py-4 text-muted">
+                          <i class="ri ri-history-line ri-2x mb-2 d-block"></i>
+                          Belum ada aktivitas keuangan
                         </li>
+                        <% } %>
                       </ul>
                     </div>
                   </div>

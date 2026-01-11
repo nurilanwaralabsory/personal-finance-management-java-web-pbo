@@ -17,8 +17,6 @@ public class Income {
     
     // Tambahan untuk join dengan category
     private String categoryName;
-    private String categoryIcon;
-    private String categoryColor;
 
     // Default constructor
     public Income() {
@@ -136,22 +134,6 @@ public class Income {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
-    }
-
-    public String getCategoryIcon() {
-        return categoryIcon;
-    }
-
-    public void setCategoryIcon(String categoryIcon) {
-        this.categoryIcon = categoryIcon;
-    }
-
-    public String getCategoryColor() {
-        return categoryColor;
-    }
-
-    public void setCategoryColor(String categoryColor) {
-        this.categoryColor = categoryColor;
     }
 
     @Override

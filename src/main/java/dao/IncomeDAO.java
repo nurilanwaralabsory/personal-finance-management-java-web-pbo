@@ -116,7 +116,7 @@ public class IncomeDAO {
 
     // Ambil pemasukan berdasarkan ID
     public Income findById(int id, int userId) {
-        String sql = "SELECT i.*, c.name as category_name, c.icon as category_icon, c.color as category_color " +
+        String sql = "SELECT i.*, c.name as category_name " +
                      "FROM incomes i LEFT JOIN categories c ON i.category_id = c.id " +
                      "WHERE i.id = ? AND i.user_id = ?";
         Connection conn = null;
@@ -150,7 +150,7 @@ public class IncomeDAO {
 
     // Ambil semua pemasukan berdasarkan user
     public List<Income> findAllByUserId(int userId) {
-        String sql = "SELECT i.*, c.name as category_name, c.icon as category_icon, c.color as category_color " +
+        String sql = "SELECT i.*, c.name as category_name " +
                      "FROM incomes i LEFT JOIN categories c ON i.category_id = c.id " +
                      "WHERE i.user_id = ? ORDER BY i.income_date DESC, i.created_at DESC";
         List<Income> incomes = new ArrayList<>();
@@ -184,7 +184,7 @@ public class IncomeDAO {
 
     // Ambil pemasukan berdasarkan rentang tanggal
     public List<Income> findByDateRange(int userId, Date startDate, Date endDate) {
-        String sql = "SELECT i.*, c.name as category_name, c.icon as category_icon, c.color as category_color " +
+        String sql = "SELECT i.*, c.name as category_name " +
                      "FROM incomes i LEFT JOIN categories c ON i.category_id = c.id " +
                      "WHERE i.user_id = ? AND i.income_date BETWEEN ? AND ? " +
                      "ORDER BY i.income_date DESC, i.created_at DESC";
@@ -221,7 +221,7 @@ public class IncomeDAO {
 
     // Ambil pemasukan berdasarkan kategori
     public List<Income> findByCategoryId(int userId, int categoryId) {
-        String sql = "SELECT i.*, c.name as category_name, c.icon as category_icon, c.color as category_color " +
+        String sql = "SELECT i.*, c.name as category_name " +
                      "FROM incomes i LEFT JOIN categories c ON i.category_id = c.id " +
                      "WHERE i.user_id = ? AND i.category_id = ? " +
                      "ORDER BY i.income_date DESC, i.created_at DESC";
@@ -373,8 +373,6 @@ public class IncomeDAO {
         // Mapping dari join dengan categories
         try {
             income.setCategoryName(rs.getString("category_name"));
-            income.setCategoryIcon(rs.getString("category_icon"));
-            income.setCategoryColor(rs.getString("category_color"));
         } catch (SQLException e) {
             // Kolom tidak ada (query tanpa join)
         }

@@ -24,30 +24,7 @@
     <!-- /Search -->
 
     <ul class="navbar-nav flex-row align-items-center ms-md-auto">
-      <!-- Style Switcher -->
-      <li class="nav-item dropdown me-2">
-        <a class="nav-link dropdown-toggle hide-arrow btn btn-icon btn-text-secondary rounded-pill" id="nav-theme" href="javascript:void(0);" data-bs-toggle="dropdown">
-          <i class="icon-base ri ri-sun-line icon-22px theme-icon-active"></i>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <li>
-            <button type="button" class="dropdown-item align-items-center active" data-bs-theme-value="light">
-              <span><i class="icon-base ri ri-sun-line icon-22px me-3"></i>Light</span>
-            </button>
-          </li>
-          <li>
-            <button type="button" class="dropdown-item align-items-center" data-bs-theme-value="dark">
-              <span><i class="icon-base ri ri-moon-clear-line icon-22px me-3"></i>Dark</span>
-            </button>
-          </li>
-          <li>
-            <button type="button" class="dropdown-item align-items-center" data-bs-theme-value="system">
-              <span><i class="icon-base ri ri-computer-line icon-22px me-3"></i>System</span>
-            </button>
-          </li>
-        </ul>
-      </li>
-      <!-- / Style Switcher-->
+    
 
       <!-- Quick Actions -->
       <li class="nav-item dropdown me-2">

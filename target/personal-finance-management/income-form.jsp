@@ -208,8 +208,8 @@
                           for (Category cat : categories) { %>
                       <div class="d-flex align-items-center mb-2">
                         <div class="avatar avatar-sm me-2">
-                          <span class="avatar-initial rounded" style="background-color: <%= cat.getColor() %>;">
-                            <i class="<%= cat.getIcon() %> text-white" style="font-size: 12px;"></i>
+                          <span class="avatar-initial rounded bg-success">
+                            <i class="ri-folder-line text-white" style="font-size: 12px;"></i>
                           </span>
                         </div>
                         <span class="small"><%= cat.getName() %></span>

@@ -8,8 +8,6 @@ public class Category {
     private String name;
     private String type; // "income" atau "expense"
     private String description;
-    private String icon;
-    private String color;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
@@ -25,25 +23,21 @@ public class Category {
     }
 
     // Constructor dengan parameter lengkap
-    public Category(int userId, String name, String type, String description, String icon, String color) {
+    public Category(int userId, String name, String type, String description) {
         this.userId = userId;
         this.name = name;
         this.type = type;
         this.description = description;
-        this.icon = icon;
-        this.color = color;
     }
 
     // Constructor lengkap dengan id dan timestamp
     public Category(int id, int userId, String name, String type, String description, 
-                   String icon, String color, Timestamp createdAt, Timestamp updatedAt) {
+                   Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.userId = userId;
         this.name = name;
         this.type = type;
         this.description = description;
-        this.icon = icon;
-        this.color = color;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -89,22 +83,6 @@ public class Category {
         this.description = description;
     }
 
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
     public Timestamp getCreatedAt() {
         return createdAt;
     }
@@ -138,8 +116,6 @@ public class Category {
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", description='" + description + '\'' +
-                ", icon='" + icon + '\'' +
-                ", color='" + color + '\'' +
                 '}';
     }
 }
