@@ -22,18 +22,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <title><%= isEdit ? "Edit" : "Tambah" %> Budget - Personal Finance Management</title>
     
-    <link rel="icon" type="image/x-icon" href="templates/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="templates/assets/vendor/fonts/iconify-icons.css" />
-    <link rel="stylesheet" href="templates/assets/vendor/libs/node-waves/node-waves.css" />
-    <link rel="stylesheet" href="templates/assets/vendor/css/core.css" />
-    <link rel="stylesheet" href="templates/assets/css/demo.css" />
-    <link rel="stylesheet" href="templates/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-    <link rel="stylesheet" href="templates/assets/vendor/libs/flatpickr/flatpickr.css" />
-    <script src="templates/assets/vendor/js/helpers.js"></script>
-    <script src="templates/assets/js/config.js"></script>
+    <link rel="stylesheet" href="assets/vendor/fonts/iconify-icons.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/node-waves/node-waves.css" />
+    <link rel="stylesheet" href="assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="assets/css/demo.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/flatpickr/flatpickr.css" />
+    <script src="assets/vendor/js/helpers.js"></script>
+    <script src="assets/js/config.js"></script>
   </head>
 
   <body>
@@ -199,7 +199,7 @@
 
                         <!-- Buttons -->
                         <div class="d-flex justify-content-end gap-2">
-                          <a href="<%= request.getContextPath() %>/budgets" class="btn btn-label-secondary">
+                          <a href="<%= request.getContextPath() %>/budgets" class="btn btn-danger">
                             <i class="ri-close-line me-1"></i> Batal
                           </a>
                           <button type="submit" class="btn btn-primary" <%= (categories == null || categories.isEmpty()) ? "disabled" : "" %>>
@@ -214,11 +214,10 @@
 
                 <!-- Info Card -->
                 <div class="col-md-4">
-                  <div class="card mb-4">
+                  <div class="card mb-4 bg-label-info">
                     <div class="card-body">
-                      <h6 class="card-title mb-3">
-                        <i class="ri-information-line me-2"></i>
-                        Tips Budget
+                      <h6 class="text-info mb-3">
+                        <i class="ri ri-lightbulb-line me-2"></i>Tips Budget
                       </h6>
                       <ul class="list-unstyled mb-0">
                         <li class="mb-3">
@@ -272,13 +271,13 @@
     </div>
 
     <!-- Scripts -->
-    <script src="templates/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="templates/assets/vendor/libs/popper/popper.js"></script>
-    <script src="templates/assets/vendor/js/bootstrap.js"></script>
-    <script src="templates/assets/vendor/libs/node-waves/node-waves.js"></script>
-    <script src="templates/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="templates/assets/vendor/js/menu.js"></script>
-    <script src="templates/assets/js/main.js"></script>
+    <script src="assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="assets/vendor/libs/popper/popper.js"></script>
+    <script src="assets/vendor/js/bootstrap.js"></script>
+    <script src="assets/vendor/libs/node-waves/node-waves.js"></script>
+    <script src="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="assets/vendor/js/menu.js"></script>
+    <script src="assets/js/main.js"></script>
 
     <script>
       // Calculate alert amount

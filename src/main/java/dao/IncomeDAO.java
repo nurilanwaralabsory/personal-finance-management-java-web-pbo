@@ -10,7 +10,6 @@ import java.util.List;
 
 public class IncomeDAO {
 
-    // Menambahkan pemasukan baru
     public boolean insert(Income income) {
         String sql = "INSERT INTO incomes (user_id, category_id, amount, description, source, income_date) VALUES (?, ?, ?, ?, ?, ?)";
         Connection conn = null;
@@ -47,7 +46,6 @@ public class IncomeDAO {
         }
     }
 
-    // Update pemasukan
     public boolean update(Income income) {
         String sql = "UPDATE incomes SET category_id = ?, amount = ?, description = ?, source = ?, income_date = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND user_id = ?";
         Connection conn = null;
@@ -85,7 +83,6 @@ public class IncomeDAO {
         }
     }
 
-    // Hapus pemasukan
     public boolean delete(int id, int userId) {
         String sql = "DELETE FROM incomes WHERE id = ? AND user_id = ?";
         Connection conn = null;
@@ -114,7 +111,6 @@ public class IncomeDAO {
         }
     }
 
-    // Ambil pemasukan berdasarkan ID
     public Income findById(int id, int userId) {
         String sql = "SELECT i.*, c.name as category_name " +
                      "FROM incomes i LEFT JOIN categories c ON i.category_id = c.id " +
@@ -148,7 +144,6 @@ public class IncomeDAO {
         return null;
     }
 
-    // Ambil semua pemasukan berdasarkan user
     public List<Income> findAllByUserId(int userId) {
         String sql = "SELECT i.*, c.name as category_name " +
                      "FROM incomes i LEFT JOIN categories c ON i.category_id = c.id " +
@@ -182,7 +177,6 @@ public class IncomeDAO {
         return incomes;
     }
 
-    // Ambil pemasukan berdasarkan rentang tanggal
     public List<Income> findByDateRange(int userId, Date startDate, Date endDate) {
         String sql = "SELECT i.*, c.name as category_name " +
                      "FROM incomes i LEFT JOIN categories c ON i.category_id = c.id " +
@@ -219,7 +213,6 @@ public class IncomeDAO {
         return incomes;
     }
 
-    // Ambil pemasukan berdasarkan kategori
     public List<Income> findByCategoryId(int userId, int categoryId) {
         String sql = "SELECT i.*, c.name as category_name " +
                      "FROM incomes i LEFT JOIN categories c ON i.category_id = c.id " +
@@ -255,7 +248,6 @@ public class IncomeDAO {
         return incomes;
     }
 
-    // Hitung total pemasukan user
     public BigDecimal getTotalByUserId(int userId) {
         String sql = "SELECT COALESCE(SUM(amount), 0) as total FROM incomes WHERE user_id = ?";
         Connection conn = null;
@@ -286,7 +278,6 @@ public class IncomeDAO {
         return BigDecimal.ZERO;
     }
 
-    // Hitung total pemasukan berdasarkan rentang tanggal
     public BigDecimal getTotalByDateRange(int userId, Date startDate, Date endDate) {
         String sql = "SELECT COALESCE(SUM(amount), 0) as total FROM incomes WHERE user_id = ? AND income_date BETWEEN ? AND ?";
         Connection conn = null;
@@ -319,7 +310,6 @@ public class IncomeDAO {
         return BigDecimal.ZERO;
     }
 
-    // Hitung total pemasukan bulan ini
     public BigDecimal getTotalThisMonth(int userId) {
         String sql = "SELECT COALESCE(SUM(amount), 0) as total FROM incomes " +
                      "WHERE user_id = ? AND EXTRACT(MONTH FROM income_date) = EXTRACT(MONTH FROM CURRENT_DATE) " +
@@ -352,7 +342,6 @@ public class IncomeDAO {
         return BigDecimal.ZERO;
     }
 
-    // Helper method untuk mapping ResultSet ke Income
     private Income mapResultSetToIncome(ResultSet rs) throws SQLException {
         Income income = new Income();
         income.setId(rs.getInt("id"));
@@ -380,7 +369,6 @@ public class IncomeDAO {
         return income;
     }
 
-    // Helper method untuk menutup resources
     private void closeResources(Connection conn, PreparedStatement stmt, ResultSet rs) {
         if (rs != null) {
             try {

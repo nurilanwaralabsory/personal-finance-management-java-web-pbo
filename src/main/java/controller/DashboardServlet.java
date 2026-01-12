@@ -39,7 +39,6 @@ public class DashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Cek session
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
@@ -50,17 +49,14 @@ public class DashboardServlet extends HttpServlet {
             User user = (User) session.getAttribute("user");
             int userId = user.getId();
 
-            // Ambil data pemasukan
             BigDecimal totalIncome = incomeDAO.getTotalByUserId(userId);
             BigDecimal incomeThisMonth = incomeDAO.getTotalThisMonth(userId);
             List<Income> recentIncomes = incomeDAO.findAllByUserId(userId);
 
-            // Ambil data pengeluaran
             BigDecimal totalExpense = expenseDAO.getTotalByUserId(userId);
             BigDecimal expenseThisMonth = expenseDAO.getTotalThisMonth(userId);
             List<Expense> recentExpenses = expenseDAO.findAllByUserId(userId);
 
-            // Handle null values
             if (totalIncome == null)
                 totalIncome = BigDecimal.ZERO;
             if (incomeThisMonth == null)
@@ -74,11 +70,9 @@ public class DashboardServlet extends HttpServlet {
             if (recentExpenses == null)
                 recentExpenses = new ArrayList<>();
 
-            // Hitung saldo
             BigDecimal totalBalance = totalIncome.subtract(totalExpense);
             BigDecimal balanceThisMonth = incomeThisMonth.subtract(expenseThisMonth);
 
-            // Ambil data kategori
             List<Category> incomeCategories = categoryDAO.findByType(userId, "income");
             List<Category> expenseCategories = categoryDAO.findByType(userId, "expense");
             if (incomeCategories == null)
@@ -87,13 +81,10 @@ public class DashboardServlet extends HttpServlet {
                 expenseCategories = new ArrayList<>();
             int totalCategories = incomeCategories.size() + expenseCategories.size();
 
-            // Hitung total transaksi
             int totalTransactions = recentIncomes.size() + recentExpenses.size();
 
-            // Ambil 5 transaksi terakhir (gabungkan income dan expense)
             List<Object[]> recentTransactions = new ArrayList<>();
 
-            // Tambahkan income ke list transaksi
             for (Income income : recentIncomes) {
                 Object[] transaction = new Object[5];
                 transaction[0] = income.getIncomeDate();
@@ -104,7 +95,6 @@ public class DashboardServlet extends HttpServlet {
                 recentTransactions.add(transaction);
             }
 
-            // Tambahkan expense ke list transaksi
             for (Expense expense : recentExpenses) {
                 Object[] transaction = new Object[5];
                 transaction[0] = expense.getExpenseDate();
@@ -115,7 +105,6 @@ public class DashboardServlet extends HttpServlet {
                 recentTransactions.add(transaction);
             }
 
-            // Sort berdasarkan tanggal (descending)
             recentTransactions.sort((a, b) -> {
                 java.sql.Date dateA = (java.sql.Date) a[0];
                 java.sql.Date dateB = (java.sql.Date) b[0];
@@ -128,17 +117,14 @@ public class DashboardServlet extends HttpServlet {
                 return dateB.compareTo(dateA);
             });
 
-            // Ambil hanya 5 transaksi terakhir
             List<Object[]> latestTransactions = recentTransactions.size() > 5
                     ? recentTransactions.subList(0, 5)
                     : recentTransactions;
 
-            // Ambil data budget
             List<Budget> budgets = budgetDAO.getAllByUserId(userId);
             if (budgets == null)
                 budgets = new ArrayList<>();
 
-            // Set attributes untuk JSP
             request.setAttribute("totalBalance", totalBalance);
             request.setAttribute("balanceThisMonth", balanceThisMonth);
             request.setAttribute("totalIncome", totalIncome);
@@ -155,7 +141,6 @@ public class DashboardServlet extends HttpServlet {
             request.setAttribute("recentExpenses",
                     recentExpenses.size() > 3 ? recentExpenses.subList(0, 3) : recentExpenses);
 
-            // Forward ke halaman dashboard (dashboard.jsp)
             request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
 
         } catch (Exception e) {

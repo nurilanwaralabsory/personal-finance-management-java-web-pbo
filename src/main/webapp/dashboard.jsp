@@ -67,7 +67,7 @@
   dir="ltr"
   data-skin="default"
   data-bs-theme="light"
-  data-assets-path="templates/assets/"
+  data-assets-path="assets/"
   data-template="vertical-menu-template">
   <head>
     <meta charset="utf-8" />
@@ -80,7 +80,7 @@
     <meta name="description" content="Aplikasi manajemen keuangan pribadi" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="templates/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -89,40 +89,39 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
       rel="stylesheet" />
 
-    <link rel="stylesheet" href="templates/assets/vendor/fonts/iconify-icons.css" />
+    <link rel="stylesheet" href="assets/vendor/fonts/iconify-icons.css" />
 
     <!-- Core CSS -->
     <!-- build:css assets/vendor/css/theme.css -->
 
-    <link rel="stylesheet" href="templates/assets/vendor/libs/node-waves/node-waves.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/node-waves/node-waves.css" />
 
-    <link rel="stylesheet" href="templates/assets/vendor/libs/pickr/pickr-themes.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/pickr/pickr-themes.css" />
 
-    <link rel="stylesheet" href="templates/assets/vendor/css/core.css" />
-    <link rel="stylesheet" href="templates/assets/css/demo.css" />
+    <link rel="stylesheet" href="assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="assets/css/demo.css" />
 
     <!-- Vendors CSS -->
 
-    <link rel="stylesheet" href="templates/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
     <!-- endbuild -->
 
-    <link rel="stylesheet" href="templates/assets/vendor/libs/apex-charts/apex-charts.css" />
-    <link rel="stylesheet" href="templates/assets/vendor/libs/swiper/swiper.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/swiper/swiper.css" />
 
     <!-- Page CSS -->
-    <link rel="stylesheet" href="templates/assets/vendor/css/pages/cards-statistics.css" />
+    <link rel="stylesheet" href="assets/vendor/css/pages/cards-statistics.css" />
 
     <!-- Helpers -->
-    <script src="templates/assets/vendor/js/helpers.js"></script>
+    <script src="assets/vendor/js/helpers.js"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
 
-    <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js. -->
-    <script src="templates/assets/vendor/js/template-customizer.js"></script>
+
 
     <!--? Config: Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file. -->
 
-    <script src="templates/assets/js/config.js"></script>
+    <script src="assets/js/config.js"></script>
   </head>
 
   <body>
@@ -168,7 +167,7 @@
                       <div class="col-md-6 text-center text-md-end order-1 order-md-2">
                         <div class="card-body pb-0 px-0 pt-2">
                           <img
-                            src="templates/assets/img/illustrations/illustration-john-light.png"
+                            src="assets/img/illustrations/illustration-john-light.png"
                             height="186"
                             class="scaleX-n1-rtl"
                             alt="Welcome"
@@ -602,35 +601,35 @@
 
     <!-- build:js assets/vendor/js/theme.js  -->
 
-    <script src="templates/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="assets/vendor/libs/jquery/jquery.js"></script>
 
-    <script src="templates/assets/vendor/libs/popper/popper.js"></script>
-    <script src="templates/assets/vendor/js/bootstrap.js"></script>
-    <script src="templates/assets/vendor/libs/node-waves/node-waves.js"></script>
+    <script src="assets/vendor/libs/popper/popper.js"></script>
+    <script src="assets/vendor/js/bootstrap.js"></script>
+    <script src="assets/vendor/libs/node-waves/node-waves.js"></script>
 
-    <script src="templates/assets/vendor/libs/@algolia/autocomplete-js.js"></script>
+    <script src="assets/vendor/libs/@algolia/autocomplete-js.js"></script>
 
-    <script src="templates/assets/vendor/libs/pickr/pickr.js"></script>
+    <script src="assets/vendor/libs/pickr/pickr.js"></script>
 
-    <script src="templates/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-    <script src="templates/assets/vendor/libs/hammer/hammer.js"></script>
+    <script src="assets/vendor/libs/hammer/hammer.js"></script>
 
-    <script src="templates/assets/vendor/libs/i18n/i18n.js"></script>
+    <script src="assets/vendor/libs/i18n/i18n.js"></script>
 
-    <script src="templates/assets/vendor/js/menu.js"></script>
+    <script src="assets/vendor/js/menu.js"></script>
 
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="templates/assets/vendor/libs/apex-charts/apexcharts.js"></script>
-    <script src="templates/assets/vendor/libs/swiper/swiper.js"></script>
+    <script src="assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    <script src="assets/vendor/libs/swiper/swiper.js"></script>
 
     <!-- Main JS -->
 
-    <script src="templates/assets/js/main.js"></script>
+    <script src="assets/js/main.js"></script>
 
     <!-- Page JS -->
-    <script src="templates/assets/js/dashboards-analytics.js"></script>
+    <script src="assets/js/dashboards-analytics.js"></script>
   </body>
 </html>

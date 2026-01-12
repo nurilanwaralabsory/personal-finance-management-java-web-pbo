@@ -31,7 +31,6 @@ public class IncomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
-        // Cek session
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
@@ -70,7 +69,6 @@ public class IncomeServlet extends HttpServlet {
         
         request.setCharacterEncoding("UTF-8");
         
-        // Cek session
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
@@ -97,7 +95,6 @@ public class IncomeServlet extends HttpServlet {
         }
     }
     
-    // Tampilkan daftar pemasukan
     private void listIncomes(HttpServletRequest request, HttpServletResponse response, User user) 
             throws ServletException, IOException {
         
@@ -111,7 +108,6 @@ public class IncomeServlet extends HttpServlet {
         request.getRequestDispatcher("/incomes.jsp").forward(request, response);
     }
     
-    // Tampilkan form tambah pemasukan
     private void showAddForm(HttpServletRequest request, HttpServletResponse response, User user) 
             throws ServletException, IOException {
         
@@ -120,7 +116,6 @@ public class IncomeServlet extends HttpServlet {
         request.getRequestDispatcher("/income-form.jsp").forward(request, response);
     }
     
-    // Tampilkan form edit pemasukan
     private void showEditForm(HttpServletRequest request, HttpServletResponse response, User user) 
             throws ServletException, IOException {
         
@@ -152,7 +147,6 @@ public class IncomeServlet extends HttpServlet {
         }
     }
     
-    // Tambah pemasukan baru
     private void addIncome(HttpServletRequest request, HttpServletResponse response, User user) 
             throws ServletException, IOException {
         
@@ -162,7 +156,6 @@ public class IncomeServlet extends HttpServlet {
         String source = request.getParameter("source");
         String incomeDateParam = request.getParameter("incomeDate");
         
-        // Validasi input
         if (amountParam == null || amountParam.trim().isEmpty()) {
             request.setAttribute("error", "Jumlah pemasukan tidak boleh kosong!");
             showAddForm(request, response, user);
@@ -191,7 +184,6 @@ public class IncomeServlet extends HttpServlet {
                 categoryId = Integer.parseInt(categoryIdParam);
             }
             
-            // Buat pemasukan baru
             Income income = new Income();
             income.setUserId(user.getId());
             income.setCategoryId(categoryId);
@@ -217,7 +209,6 @@ public class IncomeServlet extends HttpServlet {
         }
     }
     
-    // Update pemasukan
     private void updateIncome(HttpServletRequest request, HttpServletResponse response, User user) 
             throws ServletException, IOException {
         
@@ -243,7 +234,6 @@ public class IncomeServlet extends HttpServlet {
                 return;
             }
             
-            // Validasi input
             if (amountParam == null || amountParam.trim().isEmpty()) {
                 request.setAttribute("error", "Jumlah pemasukan tidak boleh kosong!");
                 request.setAttribute("income", existingIncome);
@@ -280,7 +270,6 @@ public class IncomeServlet extends HttpServlet {
                 categoryId = Integer.parseInt(categoryIdParam);
             }
             
-            // Update pemasukan
             existingIncome.setCategoryId(categoryId);
             existingIncome.setAmount(amount);
             existingIncome.setDescription(description);
@@ -307,7 +296,6 @@ public class IncomeServlet extends HttpServlet {
         }
     }
     
-    // Hapus pemasukan
     private void deleteIncome(HttpServletRequest request, HttpServletResponse response, User user) 
             throws ServletException, IOException {
         

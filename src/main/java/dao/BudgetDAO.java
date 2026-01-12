@@ -7,14 +7,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * DAO class untuk operasi CRUD Budget
- */
 public class BudgetDAO {
     
-    /**
-     * Mendapatkan semua budget berdasarkan user ID
-     */
     public List<Budget> getAllByUserId(int userId) {
         List<Budget> budgets = new ArrayList<>();
         String sql = "SELECT b.*, c.name as category_name, c.type as category_type " +
@@ -39,9 +33,6 @@ public class BudgetDAO {
         return budgets;
     }
     
-    /**
-     * Mendapatkan budget aktif berdasarkan user ID
-     */
     public List<Budget> getActiveBudgets(int userId) {
         List<Budget> budgets = new ArrayList<>();
         String sql = "SELECT b.*, c.name as category_name, c.type as category_type " +
@@ -67,9 +58,6 @@ public class BudgetDAO {
         return budgets;
     }
     
-    /**
-     * Mendapatkan budget berdasarkan ID
-     */
     public Budget getById(int id) {
         String sql = "SELECT b.*, c.name as category_name, c.type as category_type " +
                     "FROM budgets b " +
@@ -92,9 +80,6 @@ public class BudgetDAO {
         return null;
     }
     
-    /**
-     * Menambahkan budget baru
-     */
     public boolean insert(Budget budget) {
         String sql = "INSERT INTO budgets (user_id, category_id, amount, period, start_date, end_date, alert_threshold, is_active) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -127,9 +112,6 @@ public class BudgetDAO {
         return false;
     }
     
-    /**
-     * Mengupdate budget
-     */
     public boolean update(Budget budget) {
         String sql = "UPDATE budgets SET category_id = ?, amount = ?, period = ?, " +
                     "start_date = ?, end_date = ?, alert_threshold = ?, is_active = ? " +
@@ -156,9 +138,6 @@ public class BudgetDAO {
         return false;
     }
     
-    /**
-     * Menghapus budget
-     */
     public boolean delete(int id, int userId) {
         String sql = "DELETE FROM budgets WHERE id = ? AND user_id = ?";
         
@@ -176,9 +155,6 @@ public class BudgetDAO {
         return false;
     }
     
-    /**
-     * Update spent amount berdasarkan expense yang ada
-     */
     public boolean updateSpentAmount(int budgetId) {
         String sql = "UPDATE budgets b SET spent = ( " +
                 "    SELECT COALESCE(SUM(e.amount), 0) " +
@@ -200,9 +176,6 @@ public class BudgetDAO {
         return false;
     }
     
-    /**
-     * Update semua spent amount untuk user tertentu
-     */
     public boolean updateAllSpentAmounts(int userId) {
         String sql = "UPDATE budgets b SET spent = ( " +
                 "    SELECT COALESCE(SUM(e.amount), 0) " +
@@ -224,9 +197,6 @@ public class BudgetDAO {
         return false;
     }
     
-    /**
-     * Mendapatkan budget yang melebihi threshold
-     */
     public List<Budget> getBudgetsNearLimit(int userId) {
         List<Budget> budgets = new ArrayList<>();
         String sql = "SELECT b.*, c.name as category_name, c.type as category_type, " +
@@ -254,9 +224,6 @@ public class BudgetDAO {
         return budgets;
     }
     
-    /**
-     * Check if there's an overlapping budget for the same category and period
-     */
     public boolean hasOverlappingBudget(int userId, int categoryId, java.time.LocalDate startDate, java.time.LocalDate endDate, Integer excludeId) {
         String sql = "SELECT COUNT(*) FROM budgets " +
                     "WHERE user_id = ? AND category_id = ? " +
@@ -298,9 +265,6 @@ public class BudgetDAO {
         return false;
     }
     
-    /**
-     * Mapping ResultSet ke Budget object
-     */
     private Budget mapResultSetToBudget(ResultSet rs) throws SQLException {
         Budget budget = new Budget();
         budget.setId(rs.getInt("id"));

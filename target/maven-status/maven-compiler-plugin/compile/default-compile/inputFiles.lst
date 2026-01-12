@@ -5,7 +5,10 @@ C:\Users\Dapxyyy\Documents\NetBeansProjects\finance\src\main\java\controller\Tra
 C:\Users\Dapxyyy\Documents\NetBeansProjects\finance\src\main\java\model\Expense.java
 C:\Users\Dapxyyy\Documents\NetBeansProjects\finance\src\main\java\model\User.java
 C:\Users\Dapxyyy\Documents\NetBeansProjects\finance\src\main\java\model\Transaction.java
+C:\Users\Dapxyyy\Documents\NetBeansProjects\finance\src\main\java\util\PasswordUtil.java
 C:\Users\Dapxyyy\Documents\NetBeansProjects\finance\src\main\java\dao\IncomeDAO.java
+C:\Users\Dapxyyy\Documents\NetBeansProjects\finance\src\main\java\util\CSRFUtil.java
+C:\Users\Dapxyyy\Documents\NetBeansProjects\finance\src\main\java\util\ValidationUtil.java
 C:\Users\Dapxyyy\Documents\NetBeansProjects\finance\src\main\java\controller\CategoryServlet.java
 C:\Users\Dapxyyy\Documents\NetBeansProjects\finance\src\main\java\controller\LogoutServlet.java
 C:\Users\Dapxyyy\Documents\NetBeansProjects\finance\src\main\java\dao\CategoryDAO.java
