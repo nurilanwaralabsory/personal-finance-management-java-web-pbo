@@ -151,7 +151,8 @@
                           </li>
                           <li>
                             <a class="dropdown-item text-danger" href="#" 
-                               onclick="confirmDelete(<%= budget.getId() %>)">
+                               data-id="<%= budget.getId() %>"
+                               onclick="confirmDelete(this.dataset.id)">
                               <i class="ri-delete-bin-line me-2"></i> Hapus
                             </a>
                           </li>
@@ -202,7 +203,7 @@
                         <div class="progress" style="height: 8px;">
                           <div class="progress-bar bg-<%= progressColor %>" 
                                role="progressbar" 
-                               style="width: <%= Math.min(percentage, 100) %>%"
+                               <%= "style=\"width: " + Math.min(percentage, 100) + "%\"" %>
                                aria-valuenow="<%= percentage %>" 
                                aria-valuemin="0" 
                                aria-valuemax="100">
