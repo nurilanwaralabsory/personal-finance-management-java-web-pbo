@@ -5,9 +5,6 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/**
- * Model class untuk Budget/Anggaran
- */
 public class Budget {
     private Integer id;
     private Integer userId;
@@ -22,7 +19,6 @@ public class Budget {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     
-    // Data tambahan dari join dengan tabel lain
     private String categoryName;
     private String categoryType;
     
@@ -43,7 +39,6 @@ public class Budget {
         this.endDate = endDate;
     }
 
-    // Getters and Setters
     public Integer getId() {
         return id;
     }
@@ -156,7 +151,6 @@ public class Budget {
         this.categoryType = categoryType;
     }
     
-    // Helper methods
     public BigDecimal getRemaining() {
         return amount.subtract(spent);
     }

@@ -25,7 +25,6 @@ public class CategoryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
-        // Cek session
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
@@ -64,7 +63,6 @@ public class CategoryServlet extends HttpServlet {
         
         request.setCharacterEncoding("UTF-8");
         
-        // Cek session
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
@@ -91,7 +89,6 @@ public class CategoryServlet extends HttpServlet {
         }
     }
     
-    // Tampilkan daftar kategori
     private void listCategories(HttpServletRequest request, HttpServletResponse response, User user) 
             throws ServletException, IOException {
         
@@ -109,7 +106,6 @@ public class CategoryServlet extends HttpServlet {
         request.getRequestDispatcher("/categories.jsp").forward(request, response);
     }
     
-    // Tampilkan form tambah kategori
     private void showAddForm(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
@@ -118,7 +114,6 @@ public class CategoryServlet extends HttpServlet {
         request.getRequestDispatcher("/category-form.jsp").forward(request, response);
     }
     
-    // Tampilkan form edit kategori
     private void showEditForm(HttpServletRequest request, HttpServletResponse response, User user) 
             throws ServletException, IOException {
         
@@ -147,7 +142,6 @@ public class CategoryServlet extends HttpServlet {
         }
     }
     
-    // Tambah kategori baru
     private void addCategory(HttpServletRequest request, HttpServletResponse response, User user) 
             throws ServletException, IOException {
         
@@ -155,7 +149,6 @@ public class CategoryServlet extends HttpServlet {
         String type = request.getParameter("type");
         String description = request.getParameter("description");
         
-        // Validasi input
         if (name == null || name.trim().isEmpty()) {
             request.setAttribute("error", "Nama kategori tidak boleh kosong!");
             request.setAttribute("categoryType", type);
@@ -170,7 +163,6 @@ public class CategoryServlet extends HttpServlet {
             return;
         }
         
-        // Cek apakah nama sudah ada
         if (categoryDAO.isNameExists(user.getId(), name.trim(), type)) {
             request.setAttribute("error", "Nama kategori sudah ada untuk tipe ini!");
             request.setAttribute("categoryType", type);
@@ -178,7 +170,6 @@ public class CategoryServlet extends HttpServlet {
             return;
         }
         
-        // Buat kategori baru
         Category category = new Category();
         category.setUserId(user.getId());
         category.setName(name.trim());
@@ -195,7 +186,6 @@ public class CategoryServlet extends HttpServlet {
         }
     }
     
-    // Update kategori
     private void updateCategory(HttpServletRequest request, HttpServletResponse response, User user) 
             throws ServletException, IOException {
         
@@ -218,7 +208,6 @@ public class CategoryServlet extends HttpServlet {
                 return;
             }
             
-            // Validasi input
             if (name == null || name.trim().isEmpty()) {
                 request.setAttribute("error", "Nama kategori tidak boleh kosong!");
                 request.setAttribute("category", existingCategory);
@@ -227,7 +216,6 @@ public class CategoryServlet extends HttpServlet {
                 return;
             }
             
-            // Cek apakah nama sudah ada (kecuali untuk kategori yang sedang diedit)
             if (categoryDAO.isNameExistsExcludeId(user.getId(), name.trim(), existingCategory.getType(), id)) {
                 request.setAttribute("error", "Nama kategori sudah ada!");
                 request.setAttribute("category", existingCategory);
@@ -236,7 +224,6 @@ public class CategoryServlet extends HttpServlet {
                 return;
             }
             
-            // Update kategori
             existingCategory.setName(name.trim());
             existingCategory.setDescription(description);
             
@@ -255,7 +242,6 @@ public class CategoryServlet extends HttpServlet {
         }
     }
     
-    // Hapus kategori
     private void deleteCategory(HttpServletRequest request, HttpServletResponse response, User user) 
             throws ServletException, IOException {
         

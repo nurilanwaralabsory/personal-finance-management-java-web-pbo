@@ -12,16 +12,12 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-/**
- * Servlet untuk menangani login user
- */
 public class LoginServlet extends HttpServlet {
 
     private UserDAO userDAO;
     
-    // Konstanta untuk rate limiting sederhana
     private static final int MAX_LOGIN_ATTEMPTS = 5;
-    private static final long LOCKOUT_DURATION_MS = 15 * 60 * 1000; // 15 menit
+    private static final long LOCKOUT_DURATION_MS = 15 * 60 * 1000;
 
     @Override
     public void init() throws ServletException {
@@ -147,16 +143,12 @@ public class LoginServlet extends HttpServlet {
         }
     }
     
-    /**
-     * Cek apakah user sedang dalam lockout
-     */
     private boolean isLockedOut(HttpSession session) {
         Long lockoutEndTime = (Long) session.getAttribute("lockoutEndTime");
         if (lockoutEndTime != null) {
             if (System.currentTimeMillis() < lockoutEndTime) {
                 return true;
             } else {
-                // Lockout sudah berakhir, reset
                 session.removeAttribute("lockoutEndTime");
                 session.removeAttribute("loginAttempts");
             }
@@ -164,22 +156,15 @@ public class LoginServlet extends HttpServlet {
         return false;
     }
     
-    /**
-     * Get jumlah percobaan login
-     */
     private int getLoginAttempts(HttpSession session) {
         Integer attempts = (Integer) session.getAttribute("loginAttempts");
         return attempts != null ? attempts : 0;
     }
     
-    /**
-     * Increment jumlah percobaan login
-     */
     private void incrementLoginAttempts(HttpSession session) {
         int attempts = getLoginAttempts(session) + 1;
         session.setAttribute("loginAttempts", attempts);
         
-        // Jika sudah mencapai batas, set lockout
         if (attempts >= MAX_LOGIN_ATTEMPTS) {
             session.setAttribute("lockoutEndTime", System.currentTimeMillis() + LOCKOUT_DURATION_MS);
         }

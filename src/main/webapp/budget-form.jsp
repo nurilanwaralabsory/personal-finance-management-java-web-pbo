@@ -199,7 +199,7 @@
 
                         <!-- Buttons -->
                         <div class="d-flex justify-content-end gap-2">
-                          <a href="<%= request.getContextPath() %>/budgets" class="btn btn-label-secondary">
+                          <a href="<%= request.getContextPath() %>/budgets" class="btn btn-danger">
                             <i class="ri-close-line me-1"></i> Batal
                           </a>
                           <button type="submit" class="btn btn-primary" <%= (categories == null || categories.isEmpty()) ? "disabled" : "" %>>
@@ -214,11 +214,10 @@
 
                 <!-- Info Card -->
                 <div class="col-md-4">
-                  <div class="card mb-4">
+                  <div class="card mb-4 bg-label-info">
                     <div class="card-body">
-                      <h6 class="card-title mb-3">
-                        <i class="ri-information-line me-2"></i>
-                        Tips Budget
+                      <h6 class="text-info mb-3">
+                        <i class="ri ri-lightbulb-line me-2"></i>Tips Budget
                       </h6>
                       <ul class="list-unstyled mb-0">
                         <li class="mb-3">

@@ -10,7 +10,6 @@ import java.util.List;
 
 public class ExpenseDAO {
 
-    // Menambahkan pengeluaran baru
     public boolean insert(Expense expense) {
         String sql = "INSERT INTO expenses (user_id, category_id, amount, description, recipient, expense_date) VALUES (?, ?, ?, ?, ?, ?)";
         Connection conn = null;
@@ -47,7 +46,6 @@ public class ExpenseDAO {
         }
     }
 
-    // Update pengeluaran
     public boolean update(Expense expense) {
         String sql = "UPDATE expenses SET category_id = ?, amount = ?, description = ?, recipient = ?, expense_date = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND user_id = ?";
         Connection conn = null;
@@ -85,7 +83,6 @@ public class ExpenseDAO {
         }
     }
 
-    // Hapus pengeluaran
     public boolean delete(int id, int userId) {
         String sql = "DELETE FROM expenses WHERE id = ? AND user_id = ?";
         Connection conn = null;
@@ -114,7 +111,6 @@ public class ExpenseDAO {
         }
     }
 
-    // Ambil pengeluaran berdasarkan ID
     public Expense findById(int id, int userId) {
         String sql = "SELECT e.*, c.name as category_name " +
                      "FROM expenses e LEFT JOIN categories c ON e.category_id = c.id " +
@@ -148,7 +144,6 @@ public class ExpenseDAO {
         return null;
     }
 
-    // Ambil semua pengeluaran berdasarkan user
     public List<Expense> findAllByUserId(int userId) {
         String sql = "SELECT e.*, c.name as category_name " +
                      "FROM expenses e LEFT JOIN categories c ON e.category_id = c.id " +
@@ -182,7 +177,6 @@ public class ExpenseDAO {
         return expenses;
     }
 
-    // Ambil pengeluaran berdasarkan rentang tanggal
     public List<Expense> findByDateRange(int userId, Date startDate, Date endDate) {
         String sql = "SELECT e.*, c.name as category_name " +
                      "FROM expenses e LEFT JOIN categories c ON e.category_id = c.id " +
@@ -219,7 +213,6 @@ public class ExpenseDAO {
         return expenses;
     }
 
-    // Ambil pengeluaran berdasarkan kategori
     public List<Expense> findByCategoryId(int userId, int categoryId) {
         String sql = "SELECT e.*, c.name as category_name " +
                      "FROM expenses e LEFT JOIN categories c ON e.category_id = c.id " +
@@ -255,7 +248,6 @@ public class ExpenseDAO {
         return expenses;
     }
 
-    // Hitung total pengeluaran user
     public BigDecimal getTotalByUserId(int userId) {
         String sql = "SELECT COALESCE(SUM(amount), 0) as total FROM expenses WHERE user_id = ?";
         Connection conn = null;
@@ -286,7 +278,6 @@ public class ExpenseDAO {
         return BigDecimal.ZERO;
     }
 
-    // Hitung total pengeluaran berdasarkan rentang tanggal
     public BigDecimal getTotalByDateRange(int userId, Date startDate, Date endDate) {
         String sql = "SELECT COALESCE(SUM(amount), 0) as total FROM expenses WHERE user_id = ? AND expense_date BETWEEN ? AND ?";
         Connection conn = null;
@@ -319,7 +310,6 @@ public class ExpenseDAO {
         return BigDecimal.ZERO;
     }
 
-    // Hitung total pengeluaran bulan ini
     public BigDecimal getTotalThisMonth(int userId) {
         String sql = "SELECT COALESCE(SUM(amount), 0) as total FROM expenses " +
                      "WHERE user_id = ? AND EXTRACT(MONTH FROM expense_date) = EXTRACT(MONTH FROM CURRENT_DATE) " +
@@ -352,7 +342,6 @@ public class ExpenseDAO {
         return BigDecimal.ZERO;
     }
 
-    // Helper method untuk mapping ResultSet ke Expense
     private Expense mapResultSetToExpense(ResultSet rs) throws SQLException {
         Expense expense = new Expense();
         expense.setId(rs.getInt("id"));
@@ -380,7 +369,6 @@ public class ExpenseDAO {
         return expense;
     }
 
-    // Helper method untuk menutup resources
     private void closeResources(Connection conn, PreparedStatement stmt, ResultSet rs) {
         if (rs != null) {
             try {

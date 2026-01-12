@@ -31,7 +31,6 @@ public class ExpenseServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
-        // Cek session
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
@@ -70,7 +69,6 @@ public class ExpenseServlet extends HttpServlet {
         
         request.setCharacterEncoding("UTF-8");
         
-        // Cek session
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
@@ -97,7 +95,6 @@ public class ExpenseServlet extends HttpServlet {
         }
     }
     
-    // Tampilkan daftar pengeluaran
     private void listExpenses(HttpServletRequest request, HttpServletResponse response, User user) 
             throws ServletException, IOException {
         
@@ -111,7 +108,6 @@ public class ExpenseServlet extends HttpServlet {
         request.getRequestDispatcher("/expenses.jsp").forward(request, response);
     }
     
-    // Tampilkan form tambah pengeluaran
     private void showAddForm(HttpServletRequest request, HttpServletResponse response, User user) 
             throws ServletException, IOException {
         
@@ -120,7 +116,6 @@ public class ExpenseServlet extends HttpServlet {
         request.getRequestDispatcher("/expense-form.jsp").forward(request, response);
     }
     
-    // Tampilkan form edit pengeluaran
     private void showEditForm(HttpServletRequest request, HttpServletResponse response, User user) 
             throws ServletException, IOException {
         
@@ -152,7 +147,6 @@ public class ExpenseServlet extends HttpServlet {
         }
     }
     
-    // Tambah pengeluaran baru
     private void addExpense(HttpServletRequest request, HttpServletResponse response, User user) 
             throws ServletException, IOException {
         
@@ -162,7 +156,6 @@ public class ExpenseServlet extends HttpServlet {
         String recipient = request.getParameter("recipient");
         String expenseDateParam = request.getParameter("expenseDate");
         
-        // Validasi input
         if (amountParam == null || amountParam.trim().isEmpty()) {
             request.setAttribute("error", "Jumlah pengeluaran tidak boleh kosong!");
             showAddForm(request, response, user);
@@ -191,7 +184,6 @@ public class ExpenseServlet extends HttpServlet {
                 categoryId = Integer.parseInt(categoryIdParam);
             }
             
-            // Buat pengeluaran baru
             Expense expense = new Expense();
             expense.setUserId(user.getId());
             expense.setCategoryId(categoryId);
@@ -217,7 +209,6 @@ public class ExpenseServlet extends HttpServlet {
         }
     }
     
-    // Update pengeluaran
     private void updateExpense(HttpServletRequest request, HttpServletResponse response, User user) 
             throws ServletException, IOException {
         
@@ -243,7 +234,6 @@ public class ExpenseServlet extends HttpServlet {
                 return;
             }
             
-            // Validasi input
             if (amountParam == null || amountParam.trim().isEmpty()) {
                 request.setAttribute("error", "Jumlah pengeluaran tidak boleh kosong!");
                 request.setAttribute("expense", existingExpense);
@@ -280,7 +270,6 @@ public class ExpenseServlet extends HttpServlet {
                 categoryId = Integer.parseInt(categoryIdParam);
             }
             
-            // Update pengeluaran
             existingExpense.setCategoryId(categoryId);
             existingExpense.setAmount(amount);
             existingExpense.setDescription(description);
@@ -307,7 +296,6 @@ public class ExpenseServlet extends HttpServlet {
         }
     }
     
-    // Hapus pengeluaran
     private void deleteExpense(HttpServletRequest request, HttpServletResponse response, User user) 
             throws ServletException, IOException {
         

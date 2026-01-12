@@ -12,9 +12,6 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-/**
- * Servlet untuk menangani registrasi user baru
- */
 public class RegisterServlet extends HttpServlet {
     
     private UserDAO userDAO;
@@ -113,9 +110,6 @@ public class RegisterServlet extends HttpServlet {
         }
     }
     
-    /**
-     * Helper method untuk set error dan forward ke register.jsp
-     */
     private void setErrorAndForward(HttpServletRequest request, HttpServletResponse response,
                                      String error, String username, String email) 
             throws ServletException, IOException {

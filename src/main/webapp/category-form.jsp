@@ -140,7 +140,7 @@
                           <div class="col-12">
                             <hr class="my-4">
                             <div class="d-flex justify-content-end gap-2">
-                              <a href="<%= request.getContextPath() %>/categories" class="btn btn-secondary">Batal</a>
+                              <a href="<%= request.getContextPath() %>/categories" class="btn btn-danger">Batal</a>
                               <button type="submit" class="btn btn-primary">
                                 <i class="ri ri-save-line me-1"></i>
                                 <%= isEdit ? "Simpan Perubahan" : "Simpan Kategori" %>
@@ -155,9 +155,9 @@
                 
                 <!-- Tips Card -->
                 <div class="col-lg-4">
-                  <div class="card bg-label-primary">
+                  <div class="card bg-label-info">
                     <div class="card-body">
-                      <h6 class="text-primary mb-3">
+                      <h6 class="text-info mb-3">
                         <i class="ri ri-lightbulb-line me-2"></i>Tips
                       </h6>
                       <ul class="list-unstyled mb-0 small">

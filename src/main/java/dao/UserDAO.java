@@ -10,7 +10,6 @@ import java.util.List;
 
 public class UserDAO {
 
-    // Menambahkan user baru (Register)
     public boolean register(User user) {
         String sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
         Connection conn = null;
@@ -23,7 +22,6 @@ public class UserDAO {
                 return false;
             }
             
-            // Hash password sebelum disimpan ke database
             String hashedPassword = PasswordUtil.hashPassword(user.getPassword());
             
             stmt = conn.prepareStatement(sql);
@@ -43,9 +41,7 @@ public class UserDAO {
         }
     }
 
-    // Login - cek username/email dan password
     public User login(String usernameOrEmail, String password) {
-        // Query tanpa password, password akan diverifikasi menggunakan PasswordUtil
         String sql = "SELECT * FROM users WHERE (username = ? OR email = ?)";
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -65,7 +61,6 @@ public class UserDAO {
             rs = stmt.executeQuery();
             if (rs.next()) {
                 String storedPassword = rs.getString("password");
-                // Verifikasi password menggunakan PasswordUtil
                 if (PasswordUtil.verifyPassword(password, storedPassword)) {
                     return mapResultSetToUser(rs);
                 }
@@ -80,7 +75,6 @@ public class UserDAO {
         return null;
     }
 
-    // Cek apakah username sudah ada
     public boolean isUsernameExists(String username) {
         String sql = "SELECT COUNT(*) FROM users WHERE username = ?";
         Connection conn = null;
@@ -110,7 +104,6 @@ public class UserDAO {
         return false;
     }
 
-    // Cek apakah email sudah ada
     public boolean isEmailExists(String email) {
         String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
         Connection conn = null;
@@ -140,7 +133,6 @@ public class UserDAO {
         return false;
     }
 
-    // Mendapatkan user berdasarkan ID
     public User getUserById(int id) {
         String sql = "SELECT * FROM users WHERE id = ?";
         Connection conn = null;
@@ -170,7 +162,6 @@ public class UserDAO {
         return null;
     }
 
-    // Mendapatkan semua user
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM users ORDER BY created_at DESC";
@@ -201,7 +192,6 @@ public class UserDAO {
         return users;
     }
 
-    // Update password user
     public boolean updatePassword(int userId, String newPassword) {
         String sql = "UPDATE users SET password = ? WHERE id = ?";
         Connection conn = null;
@@ -214,7 +204,6 @@ public class UserDAO {
                 return false;
             }
             
-            // Hash password baru sebelum disimpan
             String hashedPassword = PasswordUtil.hashPassword(newPassword);
             
             stmt = conn.prepareStatement(sql);
@@ -233,12 +222,6 @@ public class UserDAO {
         }
     }
     
-    /**
-     * Verifikasi password lama user
-     * @param userId ID user
-     * @param oldPassword password lama yang akan diverifikasi
-     * @return true jika password cocok
-     */
     public boolean verifyPassword(int userId, String oldPassword) {
         String sql = "SELECT password FROM users WHERE id = ?";
         Connection conn = null;
@@ -270,25 +253,15 @@ public class UserDAO {
         return false;
     }
     
-    /**
-     * Update password dengan verifikasi password lama
-     * @param userId ID user
-     * @param oldPassword password lama
-     * @param newPassword password baru
-     * @return true jika update berhasil
-     */
     public boolean updatePasswordWithVerification(int userId, String oldPassword, String newPassword) {
-        // Verifikasi password lama terlebih dahulu
         if (!verifyPassword(userId, oldPassword)) {
             System.err.println("Update password gagal: Password lama tidak cocok");
             return false;
         }
         
-        // Update dengan password baru
         return updatePassword(userId, newPassword);
     }
 
-    // Helper method untuk mapping ResultSet ke User object
     private User mapResultSetToUser(ResultSet rs) throws SQLException {
         User user = new User();
         user.setId(rs.getInt("id"));
@@ -299,7 +272,6 @@ public class UserDAO {
         return user;
     }
     
-    // Helper method untuk menutup resources
     private void closeResources(Connection conn, Statement stmt, ResultSet rs) {
         try {
             if (rs != null) rs.close();

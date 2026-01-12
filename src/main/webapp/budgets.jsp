@@ -72,9 +72,6 @@
                   <span class="text-muted fw-light">Keuangan /</span> Budgets
                 </h4>
                 <div>
-                  <a href="<%= request.getContextPath() %>/budgets?action=update-spent" class="btn btn-outline-primary me-2">
-                    <i class="ri-refresh-line me-1"></i> Refresh Data
-                  </a>
                   <a href="<%= request.getContextPath() %>/budgets?action=new" class="btn btn-primary">
                     <i class="ri-add-line me-1"></i> Tambah Budget
                   </a>

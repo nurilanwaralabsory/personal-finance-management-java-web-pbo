@@ -99,14 +99,6 @@
       <span class="menu-header-text">Pengaturan</span>
     </li>
 
-    <!-- Profil -->
-    <li class="menu-item <%= currentPage.contains("profile") ? "active" : "" %>">
-      <a href="<%= request.getContextPath() %>/profile" class="menu-link">
-        <i class="menu-icon icon-base ri ri-user-line"></i>
-        <div>Profil</div>
-      </a>
-    </li>
-
     <!-- Keluar -->
     <li class="menu-item">
       <a href="<%= request.getContextPath() %>/logout" class="menu-link">

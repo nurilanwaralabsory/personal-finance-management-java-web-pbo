@@ -15,9 +15,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * Servlet untuk mengelola Budget/Anggaran
- */
 public class BudgetServlet extends HttpServlet {
     private BudgetDAO budgetDAO;
     private CategoryDAO categoryDAO;
@@ -93,14 +90,10 @@ public class BudgetServlet extends HttpServlet {
         }
     }
     
-    /**
-     * Menampilkan daftar budget
-     */
     private void listBudgets(HttpServletRequest request, HttpServletResponse response, int userId) 
             throws ServletException, IOException {
         try {
             String filter = request.getParameter("filter");
-            // Ensure spent amounts are up to date before fetching
             budgetDAO.updateAllSpentAmounts(userId);
 
             List<Budget> budgets;
@@ -123,9 +116,6 @@ public class BudgetServlet extends HttpServlet {
         }
     }
     
-    /**
-     * Menampilkan form tambah budget
-     */
     private void showNewForm(HttpServletRequest request, HttpServletResponse response, int userId) 
             throws ServletException, IOException {
         try {
@@ -149,9 +139,6 @@ public class BudgetServlet extends HttpServlet {
         }
     }
     
-    /**
-     * Menampilkan form edit budget
-     */
     private void showEditForm(HttpServletRequest request, HttpServletResponse response, int userId) 
             throws ServletException, IOException {
         try {
@@ -182,9 +169,6 @@ public class BudgetServlet extends HttpServlet {
         }
     }
     
-    /**
-     * Menambah budget baru
-     */
     private void insertBudget(HttpServletRequest request, HttpServletResponse response, int userId) 
             throws ServletException, IOException {
         try {
@@ -198,14 +182,12 @@ public class BudgetServlet extends HttpServlet {
             budget.setAlertThreshold(Integer.parseInt(request.getParameter("alertThreshold")));
             budget.setIsActive(Boolean.parseBoolean(request.getParameter("isActive")));
             
-            // Validate dates
             if (budget.getEndDate().isBefore(budget.getStartDate())) {
                 request.setAttribute("errorMessage", "Tanggal selesai harus lebih besar dari tanggal mulai!");
                 showNewForm(request, response, userId);
                 return;
             }
             
-            // Check for overlapping budgets
             if (budget.getIsActive() && budgetDAO.hasOverlappingBudget(userId, budget.getCategoryId(), 
                     budget.getStartDate(), budget.getEndDate(), null)) {
                 request.setAttribute("errorMessage", "Sudah ada budget aktif untuk kategori ini pada periode yang sama!");
@@ -214,7 +196,6 @@ public class BudgetServlet extends HttpServlet {
             }
             
             if (budgetDAO.insert(budget)) {
-                // Update spent amount untuk budget yang baru dibuat
                 budgetDAO.updateSpentAmount(budget.getId());
                 
                 request.getSession().setAttribute("successMessage", "Budget berhasil ditambahkan!");
@@ -234,9 +215,6 @@ public class BudgetServlet extends HttpServlet {
         }
     }
     
-    /**
-     * Mengupdate budget
-     */
     private void updateBudget(HttpServletRequest request, HttpServletResponse response, int userId) 
             throws ServletException, IOException {
         try {
@@ -251,14 +229,12 @@ public class BudgetServlet extends HttpServlet {
             budget.setAlertThreshold(Integer.parseInt(request.getParameter("alertThreshold")));
             budget.setIsActive(Boolean.parseBoolean(request.getParameter("isActive")));
             
-            // Validate dates
             if (budget.getEndDate().isBefore(budget.getStartDate())) {
                 request.setAttribute("errorMessage", "Tanggal selesai harus lebih besar dari tanggal mulai!");
                 showEditForm(request, response, userId);
                 return;
             }
             
-            // Check for overlapping budgets
             if (budget.getIsActive() && budgetDAO.hasOverlappingBudget(userId, budget.getCategoryId(), 
                     budget.getStartDate(), budget.getEndDate(), budget.getId())) {
                 request.setAttribute("errorMessage", "Sudah ada budget aktif untuk kategori ini pada periode yang sama!");
@@ -267,7 +243,6 @@ public class BudgetServlet extends HttpServlet {
             }
             
             if (budgetDAO.update(budget)) {
-                // Update spent amount setelah update
                 budgetDAO.updateSpentAmount(budget.getId());
                 
                 request.getSession().setAttribute("successMessage", "Budget berhasil diupdate!");
@@ -287,9 +262,6 @@ public class BudgetServlet extends HttpServlet {
         }
     }
     
-    /**
-     * Menghapus budget
-     */
     private void deleteBudget(HttpServletRequest request, HttpServletResponse response, int userId) 
             throws ServletException, IOException {
         try {
@@ -312,9 +284,6 @@ public class BudgetServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/budgets");
     }
     
-    /**
-     * Update spent amounts untuk semua budget user
-     */
     private void updateSpentAmounts(HttpServletRequest request, HttpServletResponse response, int userId) 
             throws ServletException, IOException {
         try {

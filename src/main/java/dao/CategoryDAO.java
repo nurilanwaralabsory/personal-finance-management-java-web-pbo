@@ -9,7 +9,6 @@ import java.util.List;
 
 public class CategoryDAO {
 
-    // Menambahkan kategori baru
     public boolean insert(Category category) {
         String sql = "INSERT INTO categories (user_id, name, type, description) VALUES (?, ?, ?, ?)";
         Connection conn = null;
@@ -40,7 +39,6 @@ public class CategoryDAO {
         }
     }
 
-    // Update kategori
     public boolean update(Category category) {
         String sql = "UPDATE categories SET name = ?, description = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND user_id = ?";
         Connection conn = null;
@@ -71,7 +69,6 @@ public class CategoryDAO {
         }
     }
 
-    // Hapus kategori
     public boolean delete(int id, int userId) {
         String sql = "DELETE FROM categories WHERE id = ? AND user_id = ?";
         Connection conn = null;
@@ -100,7 +97,6 @@ public class CategoryDAO {
         }
     }
 
-    // Ambil kategori berdasarkan ID
     public Category findById(int id, int userId) {
         String sql = "SELECT * FROM categories WHERE id = ? AND user_id = ?";
         Connection conn = null;
@@ -132,7 +128,6 @@ public class CategoryDAO {
         return null;
     }
 
-    // Ambil semua kategori berdasarkan user
     public List<Category> findAllByUserId(int userId) {
         String sql = "SELECT * FROM categories WHERE user_id = ? ORDER BY type, name";
         List<Category> categories = new ArrayList<>();
@@ -164,7 +159,6 @@ public class CategoryDAO {
         return categories;
     }
 
-    // Ambil kategori berdasarkan tipe (income/expense)
     public List<Category> findByType(int userId, String type) {
         String sql = "SELECT * FROM categories WHERE user_id = ? AND type = ? ORDER BY name";
         List<Category> categories = new ArrayList<>();
@@ -197,7 +191,6 @@ public class CategoryDAO {
         return categories;
     }
 
-    // Cek apakah nama kategori sudah ada untuk user dan tipe tertentu
     public boolean isNameExists(int userId, String name, String type) {
         String sql = "SELECT COUNT(*) FROM categories WHERE user_id = ? AND name = ? AND type = ?";
         Connection conn = null;
@@ -230,7 +223,6 @@ public class CategoryDAO {
         return false;
     }
 
-    // Cek apakah nama kategori sudah ada (kecuali untuk ID tertentu - untuk update)
     public boolean isNameExistsExcludeId(int userId, String name, String type, int excludeId) {
         String sql = "SELECT COUNT(*) FROM categories WHERE user_id = ? AND name = ? AND type = ? AND id != ?";
         Connection conn = null;
@@ -264,7 +256,6 @@ public class CategoryDAO {
         return false;
     }
 
-    // Helper method untuk mapping ResultSet ke Category
     private Category mapResultSetToCategory(ResultSet rs) throws SQLException {
         Category category = new Category();
         category.setId(rs.getInt("id"));
@@ -277,7 +268,6 @@ public class CategoryDAO {
         return category;
     }
 
-    // Helper method untuk menutup resources
     private void closeResources(Connection conn, PreparedStatement stmt, ResultSet rs) {
         if (rs != null) {
             try {

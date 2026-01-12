@@ -172,8 +172,8 @@
                           <div class="col-12">
                             <hr class="my-4">
                             <div class="d-flex justify-content-end gap-2">
-                              <a href="<%= request.getContextPath() %>/expenses" class="btn btn-secondary">Batal</a>
-                              <button type="submit" class="btn btn-danger">
+                              <a href="<%= request.getContextPath() %>/expenses" class="btn btn-danger">Batal</a>
+                              <button type="submit" class="btn btn-primary">
                                 <i class="ri ri-save-line me-1"></i>
                                 <%= isEdit ? "Simpan Perubahan" : "Simpan Pengeluaran" %>
                               </button>
@@ -187,9 +187,9 @@
                 
                 <!-- Tips Card -->
                 <div class="col-lg-4">
-                  <div class="card bg-label-danger">
+                  <div class="card bg-label-info">
                     <div class="card-body">
-                      <h6 class="text-danger mb-3">
+                      <h6 class="text-info mb-3">
                         <i class="ri ri-lightbulb-line me-2"></i>Tips Mencatat Pengeluaran
                       </h6>
                       <ul class="list-unstyled mb-0 small">
@@ -207,11 +207,6 @@
                       <% if (categories != null && !categories.isEmpty()) { 
                           for (Category cat : categories) { %>
                       <div class="d-flex align-items-center mb-2">
-                        <div class="avatar avatar-sm me-2">
-                          <span class="avatar-initial rounded bg-danger">
-                            <i class="ri-folder-line text-white" style="font-size: 12px;"></i>
-                          </span>
-                        </div>
                         <span class="small"><%= cat.getName() %></span>
                       </div>
                       <% } } else { %>
