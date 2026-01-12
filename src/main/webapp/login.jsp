@@ -96,6 +96,9 @@
               <% } %>
 
               <form id="formAuthentication" class="mb-4" action="login" method="POST">
+                <!-- CSRF Token -->
+                <input type="hidden" name="_csrf" value="<%= request.getAttribute("csrfToken") != null ? request.getAttribute("csrfToken") : "" %>" />
+                
                 <div class="mb-4">
                   <label for="usernameOrEmail" class="form-label">Username atau Email</label>
                   <input

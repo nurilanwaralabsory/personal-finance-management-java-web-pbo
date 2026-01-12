@@ -2,6 +2,7 @@ package dao;
 
 import model.User;
 import util.KoneksiDB;
+import util.PasswordUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,10 +23,13 @@ public class UserDAO {
                 return false;
             }
             
+            // Hash password sebelum disimpan ke database
+            String hashedPassword = PasswordUtil.hashPassword(user.getPassword());
+            
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getEmail());
-            stmt.setString(3, user.getPassword());
+            stmt.setString(3, hashedPassword);
             
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
@@ -41,7 +45,8 @@ public class UserDAO {
 
     // Login - cek username/email dan password
     public User login(String usernameOrEmail, String password) {
-        String sql = "SELECT * FROM users WHERE (username = ? OR email = ?) AND password = ?";
+        // Query tanpa password, password akan diverifikasi menggunakan PasswordUtil
+        String sql = "SELECT * FROM users WHERE (username = ? OR email = ?)";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -56,11 +61,14 @@ public class UserDAO {
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, usernameOrEmail);
             stmt.setString(2, usernameOrEmail);
-            stmt.setString(3, password);
             
             rs = stmt.executeQuery();
             if (rs.next()) {
-                return mapResultSetToUser(rs);
+                String storedPassword = rs.getString("password");
+                // Verifikasi password menggunakan PasswordUtil
+                if (PasswordUtil.verifyPassword(password, storedPassword)) {
+                    return mapResultSetToUser(rs);
+                }
             }
             
         } catch (SQLException e) {
@@ -206,8 +214,11 @@ public class UserDAO {
                 return false;
             }
             
+            // Hash password baru sebelum disimpan
+            String hashedPassword = PasswordUtil.hashPassword(newPassword);
+            
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, newPassword);
+            stmt.setString(1, hashedPassword);
             stmt.setInt(2, userId);
             
             int rowsAffected = stmt.executeUpdate();
@@ -220,6 +231,61 @@ public class UserDAO {
         } finally {
             closeResources(conn, stmt, null);
         }
+    }
+    
+    /**
+     * Verifikasi password lama user
+     * @param userId ID user
+     * @param oldPassword password lama yang akan diverifikasi
+     * @return true jika password cocok
+     */
+    public boolean verifyPassword(int userId, String oldPassword) {
+        String sql = "SELECT password FROM users WHERE id = ?";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = KoneksiDB.getConnection();
+            if (conn == null) {
+                System.err.println("Verifikasi password gagal: Koneksi database null");
+                return false;
+            }
+            
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, userId);
+            rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                String storedPassword = rs.getString("password");
+                return PasswordUtil.verifyPassword(oldPassword, storedPassword);
+            }
+            
+        } catch (SQLException e) {
+            System.err.println("Error verifikasi password: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            closeResources(conn, stmt, rs);
+        }
+        return false;
+    }
+    
+    /**
+     * Update password dengan verifikasi password lama
+     * @param userId ID user
+     * @param oldPassword password lama
+     * @param newPassword password baru
+     * @return true jika update berhasil
+     */
+    public boolean updatePasswordWithVerification(int userId, String oldPassword, String newPassword) {
+        // Verifikasi password lama terlebih dahulu
+        if (!verifyPassword(userId, oldPassword)) {
+            System.err.println("Update password gagal: Password lama tidak cocok");
+            return false;
+        }
+        
+        // Update dengan password baru
+        return updatePassword(userId, newPassword);
     }
 
     // Helper method untuk mapping ResultSet ke User object
