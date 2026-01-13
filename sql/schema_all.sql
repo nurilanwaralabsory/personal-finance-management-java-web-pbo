@@ -40,8 +40,6 @@ CREATE TABLE IF NOT EXISTS categories (
     name VARCHAR(100) NOT NULL,
     type VARCHAR(20) NOT NULL CHECK (type IN ('income', 'expense')),
     description TEXT,
-    icon VARCHAR(50) DEFAULT 'ri-folder-line',
-    color VARCHAR(20) DEFAULT '#7367f0',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(user_id, name, type)

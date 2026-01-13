@@ -89,12 +89,6 @@
             <div class="dropdown-divider my-1 mx-n2"></div>
           </li>
           <li>
-            <a class="dropdown-item" href="<%= request.getContextPath() %>/profile">
-              <i class="icon-base ri ri-user-line icon-22px me-3"></i>
-              <span>Profil Saya</span>
-            </a>
-          </li>
-          <li>
             <a class="dropdown-item" href="<%= request.getContextPath() %>/incomes">
               <i class="icon-base ri ri-arrow-up-circle-line icon-22px me-3"></i>
               <span>Pemasukan</span>
