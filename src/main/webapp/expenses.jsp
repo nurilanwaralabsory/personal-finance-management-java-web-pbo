@@ -37,7 +37,7 @@
   dir="ltr"
   data-skin="default"
   data-bs-theme="light"
-  data-assets-path="templates/assets/"
+  data-assets-path="assets/"
   data-template="vertical-menu-template">
   <head>
     <meta charset="utf-8" />
@@ -46,25 +46,25 @@
     <meta name="description" content="Kelola pengeluaran keuangan" />
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="templates/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico" />
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="templates/assets/vendor/fonts/iconify-icons.css" />
+    <link rel="stylesheet" href="assets/vendor/fonts/iconify-icons.css" />
     
     <!-- Core CSS -->
-    <link rel="stylesheet" href="templates/assets/vendor/libs/node-waves/node-waves.css" />
-    <link rel="stylesheet" href="templates/assets/vendor/libs/pickr/pickr-themes.css" />
-    <link rel="stylesheet" href="templates/assets/vendor/css/core.css" />
-    <link rel="stylesheet" href="templates/assets/css/demo.css" />
-    <link rel="stylesheet" href="templates/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/node-waves/node-waves.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/pickr/pickr-themes.css" />
+    <link rel="stylesheet" href="assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="assets/css/demo.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     
     <!-- Helpers -->
-    <script src="templates/assets/vendor/js/helpers.js"></script>
-    <script src="templates/assets/vendor/js/template-customizer.js"></script>
-    <script src="templates/assets/js/config.js"></script>
+    <script src="assets/vendor/js/helpers.js"></script>
+
+    <script src="assets/js/config.js"></script>
   </head>
 
   <body>
@@ -286,13 +286,13 @@
     </div>
 
     <!-- Core JS -->
-    <script src="templates/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="templates/assets/vendor/libs/popper/popper.js"></script>
-    <script src="templates/assets/vendor/js/bootstrap.js"></script>
-    <script src="templates/assets/vendor/libs/node-waves/node-waves.js"></script>
-    <script src="templates/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="templates/assets/vendor/js/menu.js"></script>
-    <script src="templates/assets/js/main.js"></script>
+    <script src="assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="assets/vendor/libs/popper/popper.js"></script>
+    <script src="assets/vendor/js/bootstrap.js"></script>
+    <script src="assets/vendor/libs/node-waves/node-waves.js"></script>
+    <script src="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="assets/vendor/js/menu.js"></script>
+    <script src="assets/js/main.js"></script>
     
     <script>
       function confirmDelete(id, amount) {

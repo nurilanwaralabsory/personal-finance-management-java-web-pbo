@@ -6,7 +6,7 @@
   dir="ltr"
   data-skin="default"
   data-bs-theme="light"
-  data-assets-path="templates/assets/"
+  data-assets-path="assets/"
   data-template="vertical-menu-template">
   <head>
     <meta charset="utf-8" />
@@ -14,12 +14,12 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Login - Personal Finance Management</title>
+    <title>Login - FinanceApp</title>
 
     <meta name="description" content="Login ke aplikasi Personal Finance Management" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="templates/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -28,20 +28,20 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet" />
 
-    <link rel="stylesheet" href="templates/assets/vendor/fonts/iconify-icons.css" />
+    <link rel="stylesheet" href="assets/vendor/fonts/iconify-icons.css" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="templates/assets/vendor/libs/node-waves/node-waves.css" />
-    <link rel="stylesheet" href="templates/assets/vendor/libs/pickr/pickr-themes.css" />
-    <link rel="stylesheet" href="templates/assets/vendor/css/core.css" />
-    <link rel="stylesheet" href="templates/assets/css/demo.css" />
-    <link rel="stylesheet" href="templates/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-    <link rel="stylesheet" href="templates/assets/vendor/css/pages/page-auth.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/node-waves/node-waves.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/pickr/pickr-themes.css" />
+    <link rel="stylesheet" href="assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="assets/css/demo.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="assets/vendor/css/pages/page-auth.css" />
 
     <!-- Helpers -->
-    <script src="templates/assets/vendor/js/helpers.js"></script>
-    <script src="templates/assets/vendor/js/template-customizer.js"></script>
-    <script src="templates/assets/js/config.js"></script>
+    <script src="assets/vendor/js/helpers.js"></script>
+
+    <script src="assets/js/config.js"></script>
   </head>
 
   <body>
@@ -54,7 +54,7 @@
             <div class="card-body">
               <!-- Logo -->
               <div class="app-brand justify-content-center mb-6">
-                <a href="index.jsp" class="app-brand-link">
+                <a href="./" class="app-brand-link">
                   <span class="app-brand-logo demo">
                     <span class="text-primary">
                       <svg width="32" height="18" viewBox="0 0 38 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -65,7 +65,7 @@
                       </svg>
                     </span>
                   </span>
-                  <span class="app-brand-text demo text-heading fw-bold">Finance</span>
+                  <span class="app-brand-text demo text-heading fw-bold">FinanceApp</span>
                 </a>
               </div>
               <!-- /Logo -->
@@ -154,15 +154,15 @@
     <!-- / Content -->
 
     <!-- Core JS -->
-    <script src="templates/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="templates/assets/vendor/libs/popper/popper.js"></script>
-    <script src="templates/assets/vendor/js/bootstrap.js"></script>
-    <script src="templates/assets/vendor/libs/node-waves/node-waves.js"></script>
-    <script src="templates/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="templates/assets/vendor/js/menu.js"></script>
+    <script src="assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="assets/vendor/libs/popper/popper.js"></script>
+    <script src="assets/vendor/js/bootstrap.js"></script>
+    <script src="assets/vendor/libs/node-waves/node-waves.js"></script>
+    <script src="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="assets/vendor/js/menu.js"></script>
 
     <!-- Main JS -->
-    <script src="templates/assets/js/main.js"></script>
+    <script src="assets/js/main.js"></script>
 
     <!-- Page JS -->
     <script>
