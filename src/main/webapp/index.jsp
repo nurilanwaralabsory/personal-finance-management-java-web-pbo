@@ -75,10 +75,13 @@
     <section id="about">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="badge bg-label-primary rounded-pill mb-2">FEATURES</span>
-                <h2 class="fw-bold display-6">Mengapa Memilih Kami?</h2>
+                <span class="badge bg-label-primary rounded-pill mb-2">ABOUT US</span>
+                <h2 class="fw-bold display-6">Apa Sih FinanceApp itu?</h2>
                 <p class="text-muted text-center mx-auto" style="max-width: 600px;">
-                    Kami menyediakan fitur lengkap untuk membantu Anda mencapai kebebasan finansial.
+                    FinanceApp adalah solusi manajemen keuangan pribadi yang dirancang untuk membantu Anda melacak pendapatan, mengelola pengeluaran, dan merencanakan masa depan finansial Anda. Kami hadir untuk menyederhanakan pengelolaan uang Anda agar Anda dapat fokus pada hal yang benar-benar penting: mewujudkan impian Anda.
+                </p>
+                <p class="text-muted text-center mx-auto" style="max-width: 600px;">
+                    Kami menyediakan fitur lengkap untuk membantu Anda mencapai kebebasan finansial. 
                 </p>
             </div>
             
@@ -128,8 +131,7 @@
                 <h2 class="fw-bold display-6">Tim Pengembang</h2>
             </div>
             
-            <div class="row g-4 py-5">
-                <!-- 6 Developer Placeholders -->
+            <div class="row g-4 py-5 justify-content-center">
                 <!-- Developer 1 -->
                 <div class="col-md-4 col-lg-4">
                     <div class="card team-card text-center">
@@ -139,7 +141,8 @@
                             </div>
                         </div>
                         <div class="card-body pt-0">
-                            <h5 class="card-title fw-bold mb-1">Daffa</h5>
+                            <h5 class="card-title fw-bold mb-1">Nurrachman Daffa</h5>
+                            <p class="card-title fw-bold mb-1">(0110224051)</p>
                             <p class="card-text text-muted small">Ahli dalam membangun sistem yang skalabel dan user-friendly.</p>
                             <div class="d-flex justify-content-center gap-2 mt-3">
                                 <a href="#" class="btn btn-icon btn-sm btn-outline-primary rounded-pill"><i class="bi bi-github"></i></a>
@@ -159,7 +162,8 @@
                             </div>
                         </div>
                         <div class="card-body pt-0">
-                            <h5 class="card-title fw-bold mb-1">Mutia</h5>
+                            <h5 class="card-title fw-bold mb-1">Mutia Rahma Amaliyah</h5>
+                            <p class="card-title fw-bold mb-1">(0110224131)</p>
                             <p class="card-text text-muted small">Fokus pada keamanan data dan optimasi performa server.</p>
                             <div class="d-flex justify-content-center gap-2 mt-3">
                                 <a href="#" class="btn btn-icon btn-sm btn-outline-primary rounded-pill"><i class="bi bi-github"></i></a>
@@ -179,7 +183,8 @@
                             </div>
                         </div>
                         <div class="card-body pt-0">
-                            <h5 class="card-title fw-bold mb-1">Nuril</h5>
+                            <h5 class="card-title fw-bold mb-1">Nuril Anwar Al-absory</h5>
+                            <p class="card-title fw-bold mb-1">(0110224128)</p>
                             <p class="card-text text-muted small">Menciptakan antarmuka pengguna yang intuitif dan responsif.</p>
                             <div class="d-flex justify-content-center gap-2 mt-3">
                                 <a href="#" class="btn btn-icon btn-sm btn-outline-primary rounded-pill"><i class="bi bi-github"></i></a>
@@ -195,11 +200,12 @@
                     <div class="card team-card text-center">
                         <div class="avatar-wrapper">
                             <div class="avatar-placeholder">
-                                <i class="bi bi-person-circle"></i>
+                                <img src="assets/img/team/azmi.jpeg" alt="">
                             </div>
                         </div>
                         <div class="card-body pt-0">
-                            <h5 class="card-title fw-bold mb-1">Developer 4</h5>
+                            <h5 class="card-title fw-bold mb-1">Muammar Azmi Muhammad</h5>
+                            <p class="card-title fw-bold mb-1">(0110224105)</p>
                             <p class="card-text text-muted small">Merancang pengalaman pengguna yang menyenangkan.</p>
                             <div class="d-flex justify-content-center gap-2 mt-3">
                                 <a href="#" class="btn btn-icon btn-sm btn-outline-primary rounded-pill"><i class="bi bi-github"></i></a>
@@ -215,32 +221,13 @@
                     <div class="card team-card text-center">
                         <div class="avatar-wrapper">
                             <div class="avatar-placeholder">
-                                <i class="bi bi-person-circle"></i>
+                                <img src="assets/img/team/dania.png" alt="">
                             </div>
                         </div>
                         <div class="card-body pt-0">
-                            <h5 class="card-title fw-bold mb-1">Developer 5</h5>
+                            <h5 class="card-title fw-bold mb-1">Dania Islamia</h5>
+                            <p class="card-title fw-bold mb-1">(0110224221)</p>
                             <p class="card-text text-muted small">Menjaga infrastruktur dan deployment berjalan lancar.</p>
-                            <div class="d-flex justify-content-center gap-2 mt-3">
-                                <a href="#" class="btn btn-icon btn-sm btn-outline-primary rounded-pill"><i class="bi bi-github"></i></a>
-                                <a href="#" class="btn btn-icon btn-sm btn-outline-primary rounded-pill"><i class="bi bi-linkedin"></i></a>
-                                <a href="#" class="btn btn-icon btn-sm btn-outline-primary rounded-pill"><i class="bi bi-twitter-x"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Developer 6 -->
-                <div class="col-md-4 col-lg-4">
-                    <div class="card team-card text-center">
-                        <div class="avatar-wrapper">
-                            <div class="avatar-placeholder">
-                                <i class="bi bi-person-circle"></i>
-                            </div>
-                        </div>
-                        <div class="card-body pt-0">
-                            <h5 class="card-title fw-bold mb-1">Developer 6</h5>
-                            <p class="card-text text-muted small">Memastikan proyek selesai tepat waktu dan sesuai target.</p>
                             <div class="d-flex justify-content-center gap-2 mt-3">
                                 <a href="#" class="btn btn-icon btn-sm btn-outline-primary rounded-pill"><i class="bi bi-github"></i></a>
                                 <a href="#" class="btn btn-icon btn-sm btn-outline-primary rounded-pill"><i class="bi bi-linkedin"></i></a>
